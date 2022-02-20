@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<form method="get"  class="form-inline ">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <ul class="cards">
+        {% for booksdetail in desc %}
+
+  <li>
+    <a href="" class="card" style="width: 500px; height: 450px;">
+      <img src="{{ MEDIA_URL}}{{booksdetail.book_image}}" class="card__image" alt="" />
+      <div class="card__overlay">
+        <div class="card__header" style="height: 150px;">
+          <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
+          <img class="card__thumb" src="https://i.imgur.com/7D7I6dI.png" alt="" />
+          <div class="card__header-text">
+            <h3 class="card__title">{{booksdetail.name}}</h3>
+            <span class="card__status">{{booksdetail.category}}</span>
+            <span class="card__status">Posted By: {{booksdetail.info_user.username}}</span>
+          </div>
+        </div>
+        <p class="card__description">{{booksdetail.description}}</p>
+
+      </div>
+        <a href="{% url 'detail' booksdetail.id %}" class="btn btn-primary">More Detail</a>
+    </a>
+
+  </li>
+  <li>
+    {% endfor %}
+</ul>
+{#    {% for booksdetail in desc %}#}
+{#<div class="card-me" style="width: 200px; border:2px solid black;">#}
+{#  <img src="{{ MEDIA_URL}}{{booksdetail.book_image}}" width="200px" height="150px" class="card-img-top" alt="...">#}
+{#  <div class="card-body">#}
+{#    <h5 class="card-title">{{booksdetail.name}}</h5>#}
+{#    <p class="card-text">{{booksdetail.description}}</p>#}
+{#      <p class="card-text">{{booksdetail.authors}}</p>#}
+{#      <p class="card-text">{{booksdetail.category}}</p>#}
+{#      <p class="card-text">{{booksdetail.info_user.username}}</p>#}
+{#    <a href="/main/detail/{{booksdetail.id}}" class="btn btn-primary">More Detail</a>#}
+{#  </div>#}
+{#</div>#}
+{#{% endfor %}#}
+
+
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>Register Form </h3>
+                        <div class="page-links">
+                            <a href="{% url 'signin' %}" class="active">Login</a><a href="{% url 'signup' %}">Register</a>
+                        </div>
+                         <form method="POST">
+                {% csrf_token %}
+                {% for field in form_signup %}
+                                <div class="form-group {% if field.errors %}has-error{% endif %}"
+                                     id="group_{{ field.name }}">
+                                    <label for="id_{{ field.name }}" class="control-label">{{ field.label }}</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        {{ field }}
+                                        {% if field.name == "password" %}
+                                            <div id="tail"></div>
+                                        {% endif %}
+                                    {% if field.name == "confirm_password" %}
+                                            <div id="ctail"></div>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                             {% for category in categories %}
+                                 <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="{{ category.name}}" id="{{ category.name}}" name="books">
+    <label class="form-check-label" for="{{ category.name}}">{{ category.name}}</label>
+  </div>
+                             {% endfor %}
+                <button type="submit" class="btn btn-primary mt-4">Register</button>
+            </form>
+                    </div>
+                </div>
+            </div>
+
+
+<script>
+var pass = document.querySelector("#id_password")
+var cpass=document.querySelector("#id_cpassword")
+        console.log("pass", cpass)
+        var tailIcon = document.getElementById("tail");
+        tailIcon.className = "fa fa-eye-slash fa-md icon-tail";
+        var ctailIcon = document.getElementById("ctail");
+        ctailIcon.className = "fa fa-eye-slash fa-md icon-tail";
+        pass.setAttribute('type', 'password');
+        cpass.setAttribute('type', 'password')
+        console.log("aaa", cpass.type)
+        document.getElementById("tail").onclick = function () {
+            if (pass.type === "password") {
+                console.log(pass)
+                pass.type = "text";
+                tailIcon.className = "fa fa-eye fa-md icon-tail";
+            } else {
+                console.log("pass")
+                pass.type = "password";
+                tailIcon.className = "fa fa-eye-slash fa-md icon-tail";
+            }
+        }
+        document.getElementById("ctail").onclick = function () {
+            if (cpass.type === "password") {
+                cpass.type = "text";
+                ctailIcon.className = "fa fa-eye fa-md icon-tail";
+            } else {
+                console.log("pass")
+                cpass.type = "password";
+                ctailIcon.className = "fa fa-eye-slash fa-md icon-tail";
+            }
+        }
+</script>
+{% endblock %}

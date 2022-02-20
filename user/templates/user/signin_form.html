@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/theme2.css' %}">
+{% block body %}
+    <div class="form-body">
+        <div class="row">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>Login Form</h3>
+                        <div class="page-links">
+                            <a href="{% url 'signin' %}" class="active">Login</a><a href="{% url 'signup' %}">Register</a>
+                        </div>
+                        <form method="POST" action="">
+                            {% csrf_token %}
+
+                            {% for field in form_login %}
+                                <div class="form-group {% if field.errors %}has-error{% endif %}"
+                                     id="group_{{ field.name }}">
+                                    <label for="id_{{ field.name }}" class="control-label">{{ field.label }}</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                        </div>
+                                        {{ field }}
+                                        {% if field.name == "password" %}
+                                            <div id="tail"></div>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary mt-4">Login</button>
+                            </div>
+                            <div id="tail"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signin password -->
+    <div class="form-group">
+        <small class="form-text text-muted">
+            <a href="{% url 'password_reset' %}">Forgotten Password</a>
+        </small>
+        <small class="form-text text-muted">
+            <a href="{% url 'signup' %}">Not Registered?</a>
+        </small>
+    </div>
+    <script>
+        var pass = document.querySelector("#id_password")
+        console.log("pass", pass)
+        {#var cpass=document.getElementById("id_cpassword")#}
+        var tailIcon = document.getElementById("tail");
+        tailIcon.className = "fa fa-eye-slash fa-md icon-tail";
+        pass.setAttribute('type', 'password');
+        console.log("aaa", pass.type)
+        document.getElementById("tail").onclick = function () {
+            if (pass.type === "password") {
+                console.log(pass)
+                pass.type = "text";
+                tailIcon.className = "fa fa-eye fa-md icon-tail";
+            } else {
+                console.log("pass")
+                pass.type = "password";
+                tailIcon.className = "fa fa-eye-slash fa-md icon-tail";
+            }
+        }
+
+
+    </script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
