@@ -1,12 +1,71 @@
 {% extends "base.html" %}
+{% load static %}
 {% block body %}
-    {% load crispy_forms_tags %}
-    <form method="post" enctype="multipart/form-data">
+{% load crispy_forms_tags %}
+
+
+           <style>
+                body{
+                  background: #FFFFFF;
+                }
+                label{
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+                input{
+                    margin-bottom: 0.5rem;
+                    padding: 0px 6px;
+                    width: 30%;
+                    height: 32px;
+                }
+
+               .updatebutton{
+                  background: linear-gradient(to right,#2895f1,#0060b1);
+                  color: white;
+                  font-weight: 600;
+                  border-radius: 0.6em;
+                  border: none;
+                  padding: 10px 40px;
+                  font-size: 20px;
+                  margin-bottom: 20px;
+                  margin-left: 8px;
+                  text-decoration: none;
+                  outline: none !important;
+               }
+               #updatebutton:hover{
+                      font-size: 21px;
+               }
+               .media{
+               align-items: center;
+               }
+               .account-img{
+                      outline: #0060b1;
+               }
+               .media-body{
+                      display: inline-block;
+                      margin: 30px 0px 0px 28px;
+               }
+               .form-check-input{
+                   margin-left: -12.25rem;
+               }
+               .form-check{
+                   padding-left: 4rem;
+               }
+           </style>
+    <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>Book Form </h3>
+                        <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         {{ form|crispy }}
 
         <button type="submit" class="ubutton">Submit</button>
     </form>
-    </body>
+                    </div>
+                </div>
+            </div>
+
 {% endblock %}
+

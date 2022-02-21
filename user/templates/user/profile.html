@@ -45,31 +45,40 @@
                       display: inline-block;
                       margin: 30px 0px 0px 28px;
                }
+               .form-check-input{
+                   margin-left: -12.25rem;
+               }
+               .form-check{
+                   padding-left: 4rem;
+               }
            </style>
-           <div class="container">
-               <h1 class="title text-center">Personal Information</h1>
-                        <div class="row">
-                          <div class="col-12">
-                            <div class="media mb-4">
-{#                                <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">#}
-                                <div class="media-body mb-4">
-                                    <h2 class="account-heading">{{ user.username }}</h2>
-                                    <p class="text-secondary">{{ user.email }}</p>
-                                </div>
-                            </div>
-                            <form method ="POST" enctype="multipart/form-data">
+    <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <h3>Personal Information </h3>
+                        <form method ="POST" enctype="multipart/form-data">
                                 {% csrf_token%}
                                 <fieldset class="form-group">
 
                                     {{ u_form | crispy }}
-
+                                    Book Categories you like:
+                                    {% for i in user_category %}
+                                    {{ i.name }},
+                                    {% endfor %}
+{#                                    {% for category in categories %}#}
+{#                                 <div class="form-check">#}
+{#    <input class="form-check-input" type="checkbox" value="{{ category.name}}" id="{{ category.name}}" {% if category in user_category %}checked{% endif %} name="books">#}
+{#    <label class="form-check-label" for="{{ category.name}}">{{ category.name}}</label>#}
+{#  </div>#}
+{#                             {% endfor %}#}
                                 </fieldset>
                                 <div class="form-group">
                                     <button class="updatebutton" type="submit">Update</button>
                                 </div>
+
                             </form>
-                          </div>
-                        </div>
-           </div>
+                    </div>
+                </div>
+            </div>
 
 {% endblock %}

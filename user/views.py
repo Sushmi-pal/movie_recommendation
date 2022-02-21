@@ -104,6 +104,8 @@ def ProfileView(request):
 
     context = {
         'u_form': u_form,
+        'user_category': request.user.category_set.all(),
+        'categories': Category.objects.all()
         # 'p_form': p_form
     }
     return render(request, 'user/profile.html', context)
