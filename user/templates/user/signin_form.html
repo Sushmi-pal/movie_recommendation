@@ -4,7 +4,13 @@
 <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="{% static 'css/theme2.css' %}">
+
 {% block body %}
+    <style>
+    body{
+        overflow: hidden;
+    }
+</style>
     <div class="form-body">
         <div class="row">
             <div class="img-holder">
@@ -45,6 +51,7 @@
                             </div>
                             <div id="tail"></div>
                         </form>
+                    <a style="color: white" href="{% url 'password_reset' %}">Forgot Password?</a>
                     </div>
                 </div>
             </div>

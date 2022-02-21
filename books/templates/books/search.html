@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<form method="get" action="{% url 'search' %}" class="form-inline ">
+<form method="get"  class="form-inline ">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <ul class="cards">
-        {% for booksdetail in desc %}
+     {% if book.count == 0 %}
+         No Search Results Found!
+    {% else %}
+        {% for booksdetail in book %}
 
   <li>
     <a href="" class="card" style="width: 400px; height: 450px;">
@@ -29,5 +32,6 @@
 
   </li>
     {% endfor %}
+    {% endif %}
 </ul>
 {% endblock %}

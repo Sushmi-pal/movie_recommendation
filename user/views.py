@@ -21,7 +21,7 @@ def get_started(request):
 
 
 def home(request):
-    return render(request, "base.html")
+    return render(request, "base.html", {"menuindex": 1})
 
 
 def LoginView(request):
@@ -44,13 +44,10 @@ def LoginView(request):
         if request.user.is_authenticated:
             return redirect('/user/profile/')
         form = LoginForm()
-    return render(request, 'user/signin_form.html', {'form_login': form})
+    return render(request, 'user/signin_form.html', {'form_login': form, "menuindex": 2})
 
 
 def SignupView(request):
-    if request.method == 'GET':
-        if request.user.is_authenticated:
-            return redirect('profile')
     if request.method == 'POST':
         print(request.POST)
         books = request.POST.getlist('books')
@@ -73,10 +70,13 @@ def SignupView(request):
             print('user', user)
             return redirect('signin')
     elif request.method == 'GET':
-        form = SignupForm()
-        categories = Category.objects.all()
+        if request.user.is_authenticated:
+            return redirect('profile')
+        else:
+            form = SignupForm()
+    cat = Category.objects.all()
 
-    return render(request, 'user/register_form.html', {'form_signup': form, 'categories': categories})
+    return render(request, 'user/register_form.html', {'form_signup': form, 'categories': cat, "menuindex": 2})
 
 
 def LogoutView(request):
@@ -105,7 +105,8 @@ def ProfileView(request):
     context = {
         'u_form': u_form,
         'user_category': request.user.category_set.all(),
-        'categories': Category.objects.all()
+        'categories': Category.objects.all(),
+        'menuindex': 5
         # 'p_form': p_form
     }
     return render(request, 'user/profile.html', context)
