@@ -7,6 +7,7 @@
            <style>
                 body{
                   background: #FFFFFF;
+                    overflow: hidden;
                 }
                 label{
                     font-size: 18px;
@@ -51,11 +52,30 @@
                .form-check{
                    padding-left: 4rem;
                }
+               #id_book_image{
+                   height: 40px;
+               }
            </style>
-    <div class="form-holder">
+
+    <div class="form-body">
+        <div class="website-logo">
+            <a href="index.html">
+                <div class="logo">
+                    <img class="logo-size" src="images/logo-light.svg" alt="">
+                </div>
+            </a>
+        </div>
+        <div class="row">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+
+                </div>
+            </div>
+            <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
-                        <h3>Book Form </h3>
+                        <h3>Book Form</h3>
                         <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -66,6 +86,7 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
 {% endblock %}
-

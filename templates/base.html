@@ -718,7 +718,7 @@ html, body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: whitesmoke;
+    background-color: white;
     background-size: cover;
     background-position: center;
     z-index: -1;
@@ -737,6 +737,8 @@ html, body {
 .form-holder {
     margin-left: 550px;
     width: 100%;
+    height: 100%;
+    overflow-y: hidden !important;
 }
 
 .form-holder .form-content {
@@ -2416,6 +2418,10 @@ body {
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
+.active-me{
+    border-bottom: 2px solid black;
+}
+
 </style>
 </head>
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -2424,30 +2430,30 @@ body {
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fa fa-bars"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" id="navbarNav" style="position:sticky;">
         <ul class="navbar-nav ml-auto">
             {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">HOME </a>
+                    <a {% if menuindex == 1 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %} href="{% url 'home' %}">HOME </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'recently_added' %}">Recently Added </a>
+                    <a {% if menuindex == 3 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'recently_added' %}">Recently Added </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'my_books' %}">My Books</a>
+                    <a {% if menuindex == 4 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'my_books' %}">My Books</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">PROFILE</a>
+                    <a {% if menuindex == 5 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'profile' %}">PROFILE</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">LOGOUT {{ request.user.username }}</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">HOME </a>
+                    <a {% if menuindex == 1 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %} href="{% url 'home' %}">HOME </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'get_started' %}">Get Started</a>
+                    <a {% if menuindex == 2 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %} href="{% url 'get_started' %}">Get Started</a>
                 </li>
             {% endif %}
         </ul>

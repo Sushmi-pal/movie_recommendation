@@ -24,7 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('password_reset/done/', auth_views.PasswordResetCompleteView.as_view(
-        template_name='accounts/password_reset_done.html'),
+        template_name='registration/password_reset_done.html'),
          name='password_reset_done'),
 
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(),
@@ -32,7 +32,7 @@ urlpatterns = [
     path('password/reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
 
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
-        template_name='accounts/password_reset_complete.html'),
+        template_name='registration/password_reset_complete.html'),
          name='password_reset_complete'),
     path("user/", include("user.urls")),
     path("books/", include("books.urls")),

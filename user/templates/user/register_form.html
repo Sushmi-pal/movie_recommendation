@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
+
 {% block body %}
+    <style>
+    {#body{#}
+    {#    overflow: hidden;#}
+    {#}#}
+</style>
     <div class="form-body">
         <div class="website-logo">
             <a href="index.html">
@@ -20,7 +26,7 @@
                     <div class="form-items">
                         <h3>Register Form </h3>
                         <div class="page-links">
-                            <a href="{% url 'signin' %}" class="active">Login</a><a href="{% url 'signup' %}">Register</a>
+                            <a href="{% url 'signin' %}">Login</a><a href="{% url 'signup' %}" class="active">Register</a>
                         </div>
                         <form method="POST">
                 {% csrf_token %}
@@ -70,9 +76,9 @@ var cpass=document.querySelector("#id_cpassword")
         console.log("aaa", cpass.type)
         document.getElementById("tail").onclick = function () {
             if (pass.type === "password") {
-                console.log(pass)
                 pass.type = "text";
                 tailIcon.className = "fa fa-eye fa-md icon-tail";
+
             } else {
                 console.log("pass")
                 pass.type = "password";
