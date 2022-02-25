@@ -1,37 +1,55 @@
 {% extends 'base.html' %}
 {% block body %}
-
-<form method="get"  class="form-inline ">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <style>
+        #search_button {
+            min-width: 30px;
+            cursor: pointer;
+            background: cornflowerblue;
+            color: white;
+            padding: 9px;
+            text-transform: uppercase;
+        }
+    </style>
+    <div style="float: right">
+     <form method="get" class="form-inline ">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query"
+               id="query" style="width: 400px;">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="search_button">Search</button>
     </form>
+    </div>
+
     <ul class="cards">
-     {% if book.count == 0 %}
-         No Search Results Found!
-    {% else %}
-        {% for booksdetail in book %}
+        {% if book.count == 0 %}
+            <div class="alert alert-info" role="alert" style="height: 60px;">
+                <p style="font-size: 20px;">No Search Results Found!</p>
+</div>
 
-  <li>
-    <a href="" class="card" style="width: 400px; height: 450px;">
-      <img src="{{ MEDIA_URL}}{{booksdetail.book_image}}" class="card__image" alt="" />
-      <div class="card__overlay">
-        <div class="card__header" style="height: 150px;">
-          <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
-          <img class="card__thumb" src="https://i.imgur.com/7D7I6dI.png" alt="" />
-          <div class="card__header-text">
-            <h3 class="card__title">{{booksdetail.name}}</h3>
-            <span class="card__status">{{booksdetail.category}}</span>
-            <span class="card__status">Posted By: {{booksdetail.info_user.username}}</span>
-          </div>
-        </div>
-        <p class="card__description">{{booksdetail.description}}</p>
+        {% else %}
+            {% for booksdetail in book %}
 
-      </div>
-        <a href="{% url 'detail' booksdetail.id %}" class="btn btn-primary">More Detail</a>
-    </a>
+                <li>
+                    <a href="" class="card" style="width: 400px; height: 450px;">
+                        <img src="{{ MEDIA_URL }}{{ booksdetail.book_image }}" class="card__image" alt=""/>
+                        <div class="card__overlay">
+                            <div class="card__header" style="height: 150px;">
+                                <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
+                                    <path/>
+                                </svg>
+                                <img class="card__thumb" src="https://i.imgur.com/7D7I6dI.png" alt=""/>
+                                <div class="card__header-text">
+                                    <h3 class="card__title">{{ booksdetail.name }}</h3>
+                                    <span class="card__status">{{ booksdetail.category }}</span>
+                                    <span class="card__status">Posted By: {{ booksdetail.info_user.username }}</span>
+                                </div>
+                            </div>
+                            <p class="card__description">{{ booksdetail.description }}</p>
 
-  </li>
-    {% endfor %}
-    {% endif %}
-</ul>
+                        </div>
+                        <a href="{% url 'detail' booksdetail.id %}" class="btn btn-primary">More Detail</a>
+                    </a>
+
+                </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
 {% endblock %}
