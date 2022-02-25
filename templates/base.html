@@ -2421,16 +2421,23 @@ body {
 .active-me{
     border-bottom: 2px solid black;
 }
+nav{
+    background-color: cornflowerblue;
+    position: sticky;
+}
+.form-content{
+    background-color: lightslategrey;
+}
 
 </style>
 </head>
-<nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" href="{% url 'home' %}" style="color: cornflowerblue;">𝓑𝓸𝓸𝓴 𝓡𝓮𝓬𝓸𝓶𝓶𝓮𝓷𝓭𝓮𝓻</a>
+<nav class="navbar navbar-expand-lg navbar-light" style="position:sticky; color: cornflowerblue; top: 0; z-index: 1">
+    <a class="navbar-brand" href="{% url 'home' %}" style="color: white;">𝓑𝓸𝓸𝓴 𝓡𝓮𝓬𝓸𝓶𝓶𝓮𝓷𝓭𝓮𝓻</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fa fa-bars"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav" style="position:sticky;">
+    <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             {% if request.user.is_authenticated %}
                 <li class="nav-item">
