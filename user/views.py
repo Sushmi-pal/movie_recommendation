@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.urls import reverse
 
-from .forms import LoginForm, SignupForm, UserUpdateForm
+from .forms import LoginForm, SignupForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -54,7 +54,7 @@ def SignupView(request):
         print(books)
 
         form = SignupForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and len(books) > 0:
             print('form is valid')
             user = User(username=form.cleaned_data['username'],
                         first_name=form.cleaned_data['first_name'],
@@ -69,6 +69,8 @@ def SignupView(request):
                 b1[0].categories.add(user)
             print('user', user)
             return redirect('signin')
+        else:
+            messages.error(request, "Please select the books type you like.")
     elif request.method == 'GET':
         if request.user.is_authenticated:
             return redirect('profile')
@@ -101,12 +103,12 @@ def ProfileView(request):
 
     else:
         u_form = UserUpdateForm(instance=request.user)
-
+        p_form = ProfileUpdateForm(instance=request.user.profile)
     context = {
         'u_form': u_form,
         'user_category': request.user.category_set.all(),
         'categories': Category.objects.all(),
-        'menuindex': 5
-        # 'p_form': p_form
+        'menuindex': 5,
+        'p_form': p_form
     }
     return render(request, 'user/profile.html', context)

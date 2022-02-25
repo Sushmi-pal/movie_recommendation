@@ -77,7 +77,7 @@
                         <form method ="POST" enctype="multipart/form-data">
                                 {% csrf_token%}
                                 <fieldset class="form-group">
-
+                                    {{ p_form | crispy }}
                                     {{ u_form | crispy }}
                                     Book Categories you like:
                                     {% for i in user_category %}
