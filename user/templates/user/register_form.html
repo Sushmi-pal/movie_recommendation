@@ -28,6 +28,13 @@
                         <div class="page-links">
                             <a href="{% url 'signin' %}">Login</a><a href="{% url 'signup' %}" class="active">Register</a>
                         </div>
+                    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
                         <form method="POST">
                 {% csrf_token %}
                 {% for field in form_signup %}

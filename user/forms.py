@@ -32,6 +32,7 @@ class SignupForm(forms.Form):
     confirm_password = forms.CharField(max_length=128, widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'id': 'id_cpassword', 'placeholder': 'Confirm Password'}), label="")
 
+
     def clean_username(self):
         if User.objects.filter(username=self.cleaned_data['username']).exists():
             raise forms.ValidationError('This username is taken')
@@ -44,6 +45,7 @@ class SignupForm(forms.Form):
             raise forms.ValidationError('Password donot match')
 
 
+
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
@@ -51,7 +53,11 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
 
-# class ProfileUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ['image']
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
+        labels = {
+            "image": " "
+        }
+
