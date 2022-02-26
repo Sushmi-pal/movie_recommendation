@@ -2,16 +2,17 @@ from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.urls import reverse
 
+from books.models import Books
 from .forms import LoginForm, SignupForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import transaction
-
+from book_recommendation.settings import MEDIA_URL
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
-from .models import Category
+from .models import Category, Profile
 
 
 # Create your views here.
@@ -21,7 +22,9 @@ def get_started(request):
 
 
 def home(request):
-    return render(request, "base.html", {"menuindex": 1})
+    u = User.objects.all()
+    desc = Books.objects.all()
+    return render(request, "books/home.html", {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 1})
 
 
 def LoginView(request):
@@ -68,6 +71,7 @@ def SignupView(request):
                     name=i)  # Results in (<Category: Category object (2)>, True). So, b1[0] to get the queryset
                 b1[0].categories.add(user)
             print('user', user)
+            Profile.objects.create(user=user)
             return redirect('signin')
         else:
             messages.error(request, "Please select the books type you like.")
@@ -91,10 +95,10 @@ def LogoutView(request):
 def ProfileView(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        # p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if u_form.is_valid():
             u_form.save()
-            # p_form.save()
+            p_form.save()
             messages.success(
                 request,
                 f'Your profile has been updated successfully'

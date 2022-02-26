@@ -21,7 +21,7 @@ class Profile(models.Model):
     )
 
     image = models.ImageField(
-        default='default.png',
+        default='book_pic/default.png',
         upload_to='profile_pics'
         )
 

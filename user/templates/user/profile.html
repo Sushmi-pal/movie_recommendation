@@ -74,6 +74,7 @@
                 <div class="form-content">
                     <div class="form-items">
                         <h3>User Profile</h3>
+                    <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
                         <form method ="POST" enctype="multipart/form-data">
                                 {% csrf_token%}
                                 <fieldset class="form-group">
@@ -100,5 +101,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
