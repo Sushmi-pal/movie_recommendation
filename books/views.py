@@ -1,11 +1,11 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BookForm
-from .models import Books
+from .models import Books, History
 from book_recommendation.settings import MEDIA_URL
 
 
@@ -18,6 +18,7 @@ def MyItems(request):
             add_user = form.save(commit=False)
             add_user.info_user = request.user
             add_user.save()
+            return redirect("recently_added")
 
     elif request.method == 'GET':
         form = BookForm()
@@ -38,10 +39,17 @@ def RecentlyAdded(request):
 class BookDetailView(DetailView):
     model = Books
 
+
     def get_context_data(self, **kwargs):
+        History.objects.create(user=self.request.user, book=Books.objects.get(id=self.kwargs['pk']))
         context = super(BookDetailView, self).get_context_data(**kwargs)
         context['MEDIA_URL'] = MEDIA_URL
         return context
+
+
+
+
+
 
 
 class BookUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

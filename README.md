@@ -21,7 +21,14 @@ pip install -r requirements.txt
 python3 manage.py makemigrations
 python3 manage.py migrate
 ```
-- There is a file named category_data.py on the root directory. You have to run that code on the python shell at first. The steps are given there. The categories are added to table named Category from this code.
+- Run the command
+```
+python3 manage.py shell
+```
+and inside that console write the command
+```
+exec(open('category_data.py').read())
+```
 - Finally run the command to run the server.
 ```
 python3 manage.py runserver
