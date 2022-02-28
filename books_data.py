@@ -8,7 +8,7 @@ import random
 book_data = pd.read_csv("/home/dell/Desktop/book_recommender/book_recommendation/book_models.csv")
 
 for row_data in range(len(book_data)):
-    cat_id = Category.objects.filter(name=book_data.iloc[row_data]['Genres'])
+    cat_id = Category.objects.filter(name=book_data.iloc[row_data]['Genres']).first()
 
     users_id_list = list(User.objects.all())
 
