@@ -166,13 +166,17 @@ def recommender_engine(book_title, tfidf=tfidf):
     book_idx = np.where(book_list == str(book_title))[0][0]
 
     book_similarities = doc_sim_df.iloc[book_idx].values
-    similar_book_idxs = np.argsort(-book_similarities)[1:6]
+    similar_book_idxs = np.argsort(-book_similarities)[1:3]
     similar_book = book_list[similar_book_idxs]
 
     return similar_book
 
 def recommend_books(request):
     book_name_set=book_history(request)
+    similar_books = []
     for i in book_name_set:
         similar_book=recommender_engine(i, tfidf=tfidf)
+        similar_books.append(similar_book)
 
+    bookList = [item for elem in similar_books for item in elem]
+    return set(bookList)
