@@ -90,21 +90,3 @@
 
 {% endblock %}
 
-
-
-{#<h1 style="margin-bottom: 50px;">Book's Detail</h1>#}
-{##}
-{#    <div class="image-side">#}
-{#<img src="{{MEDIA_URL}}{{object.book_image}}" width="300px" height="300px" >#}
-{#</div>#}
-{#<h2 style="margin-top: 20px;">Posted By:{{object.info_user}}<br>#}
-{#Book's name:{{object.name}}<br>#}
-{#Authors:{{object.authors}}<br>#}
-{#Description:{{object.description}}<br>#}
-{#Category:{{object.category}}<br>#}
-{#</h2>#}
-{##}
-{#{% if object.info_user == request.user %}#}
-{#<a href="{% url 'update' object.id %}" class="btn btn-secondary">Update</a>#}
-{#<a href="{% url 'delete' object.id %}" class="btn btn-danger">Delete</a>#}
-{#{% endif %}#}
