@@ -2447,6 +2447,9 @@ nav{
                     <a {% if menuindex == 3 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'recently_added' %}">Recently Added </a>
                 </li>
                 <li class="nav-item">
+                    <a {% if menuindex == 6 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'recommend' %}">Recommended Books </a>
+                </li>
+                <li class="nav-item">
                     <a {% if menuindex == 4 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'my_books' %}">My Books</a>
                 </li>
                 <li class="nav-item">
