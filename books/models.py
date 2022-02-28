@@ -13,3 +13,8 @@ class Books(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     info_user = models.ForeignKey(User, on_delete=models.CASCADE)
     book_image = models.ImageField(upload_to='book_pic')
+
+class History(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Books, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now=True)
