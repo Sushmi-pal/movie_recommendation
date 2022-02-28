@@ -143,6 +143,8 @@ def recommender_engine(book_title, tfidf=tfidf):
 
     category_df.columns = ['category_id', 'category_name']
     main_data = books_df.merge(category_df, how="left", on="category_id")
+    print(main_data.columns)
+    print(main_data)
 
     # preprocessing
     normalized_corpus = np.vectorize(normalize_document)
@@ -153,7 +155,7 @@ def recommender_engine(book_title, tfidf=tfidf):
                        'category': np.array(main_data['category_name'])})
 
     # vectorization
-    tfidf_matrix = tfidf.fit_transform(df['description']+df['category_name'])
+    tfidf_matrix = tfidf.fit_transform(df['description']+df['category'])
     print(tfidf_matrix.shape)
 
     # similarity_scores
