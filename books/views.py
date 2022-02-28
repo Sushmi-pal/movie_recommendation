@@ -53,6 +53,7 @@ class BookDetailView(DetailView):
 class BookUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Books
     fields = ['name', 'authors', 'description', 'category', 'book_image']
+    success_url = '/'
 
     def form_valid(self, form):
         form.instance.info_user = self.request.user

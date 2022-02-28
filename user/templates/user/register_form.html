@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <style>
-    {#body{#}
-    {#    overflow: hidden;#}
-    {#}#}
-</style>
     <div class="form-body">
         <div class="website-logo">
             <a href="index.html">
@@ -22,8 +17,8 @@
                 </div>
             </div>
             <div class="form-holder">
-                <div class="form-content">
-                    <div class="form-items">
+                <div class="form-content" style="height: 100%; overflow: scroll">
+                    <div class="form-items" style="height: 100%;">
                         <h3>Register Form </h3>
                         <div class="page-links">
                             <a href="{% url 'signin' %}">Login</a><a href="{% url 'signup' %}" class="active">Register</a>
@@ -56,12 +51,14 @@
 
                                 </div>
                             {% endfor %}
+                        <div>
                              {% for category in categories %}
                                  <div class="form-check">
     <input class="form-check-input" type="checkbox" value="{{ category.name}}" id="{{ category.name}}" name="books">
     <label class="form-check-label" for="{{ category.name}}">{{ category.name}}</label>
   </div>
                              {% endfor %}
+                        </div>
                 <button type="submit" class="btn btn-primary mt-4">Register</button>
             </form>
                     </div>
