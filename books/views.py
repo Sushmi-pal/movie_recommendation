@@ -19,6 +19,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
 
+nltk.download('punkt')
 # Create your views here.
 def MyItems(request):
     if request.method == 'POST':
@@ -101,7 +102,6 @@ def book_history(request):
 
 def normalize_document(doc):
     # lower case and remove special characters\whitespaces
-    nltk.download('punkt')
     doc = re.sub(r'[^a-zA-Z0-9\s]', '', doc, re.I | re.A)
     doc = doc.lower()
     doc = doc.strip()
@@ -148,13 +148,12 @@ def recommender_engine(book_title, tfidf=tfidf):
     # preprocessing
     normalized_corpus = np.vectorize(normalize_document)
     norm_corpus = normalized_corpus(list(main_data['description']))
-    print(len(norm_corpus))
 
     df = pd.DataFrame({'description': norm_corpus,
                        'category': np.array(main_data['category_name'])})
 
     # vectorization
-    tfidf_matrix = tfidf.fit_transform(df['description']+df['category_name'])
+    tfidf_matrix = tfidf.fit_transform(df['description']+df['category'])
     print(tfidf_matrix.shape)
 
     # similarity_scores
@@ -188,8 +187,10 @@ def recommend_books(request):
 
     bookList = [item for elem in similar_books for item in elem]
     sb = set(bookList)
+    print("SB:",sb)
     l = []
     for i in sb:
         l.append(Books.objects.filter(name=i).last())
+    print("L:",l)
     return render(request, 'books/recommended_books.html',
                   {'MEDIA_URL': MEDIA_URL, "menuindex": 6, "desc": l, "heading": "Recommended Books"})
