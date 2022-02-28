@@ -12,7 +12,7 @@ class Books(models.Model):
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     info_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book_image = models.ImageField(upload_to='book_pic')
+    book_image = models.ImageField(upload_to='book_pic', default="book_pic/default.png")
 
 class History(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
