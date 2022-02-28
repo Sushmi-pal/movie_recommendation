@@ -16,6 +16,7 @@ Recommended books is added on recently added section based on the users choice o
 ```
 pip install -r requirements.txt
 ```
+- Comment out code in lines 137-163 from books/views.py
 - Run the command
 ```
 python3 manage.py makemigrations
@@ -33,3 +34,18 @@ exec(open('category_data.py').read())
 ```
 python3 manage.py runserver
 ```
+- Now do register through the site atleast 2 users.
+- open terminal and run:
+```
+python3 manage.py shell
+```
+and inside console write
+```
+exec(open('books_data.py').read())
+```
+- uncomment the above commented code in books/views.py
+- Now again run the server
+```
+python3 manage.py runserver
+```
+- Now since we are taking input for recommendation through history(i.e. most recently viewed books). So, we will need to view few books to start getting recommendation.

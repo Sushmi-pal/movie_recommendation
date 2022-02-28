@@ -18,8 +18,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
-
 nltk.download('punkt')
+
+
 # Create your views here.
 def MyItems(request):
     if request.method == 'POST':
@@ -133,37 +134,37 @@ def normalize_document(doc):
 
 tfidf = TfidfVectorizer(ngram_range=(1, 2), min_df=2)
 
+# creating dataframe for recommendation engine
+books_object = list(Books.objects.values())
+books_df = pd.DataFrame(books_object)
 
-def recommender_engine(book_title, tfidf=tfidf):
-    # creating dataframe for recommendation engine
-    books_object = list(Books.objects.values())
-    books_df = pd.DataFrame(books_object)
+category_object = list(Category.objects.values())
+category_df = pd.DataFrame(category_object)
 
-    category_object = list(Category.objects.values())
-    category_df = pd.DataFrame(category_object)
+category_df.columns = ['category_id', 'category_name']
+main_data = books_df.merge(category_df, how="left", on="category_id")
 
-    category_df.columns = ['category_id', 'category_name']
-    main_data = books_df.merge(category_df, how="left", on="category_id")
+# preprocessing
+normalized_corpus = np.vectorize(normalize_document)
+norm_corpus = normalized_corpus(list(main_data['description']))
 
-    # preprocessing
-    normalized_corpus = np.vectorize(normalize_document)
-    norm_corpus = normalized_corpus(list(main_data['description']))
+df = pd.DataFrame({'description': norm_corpus,
+                   'category': np.array(main_data['category_name'])})
 
-    df = pd.DataFrame({'description': norm_corpus,
-                       'category': np.array(main_data['category_name'])})
+# vectorization
+tfidf_matrix = tfidf.fit_transform(df['description'] + df['category'])
+print(tfidf_matrix.shape)
 
-    # vectorization
-    tfidf_matrix = tfidf.fit_transform(df['description']+df['category'])
-    print(tfidf_matrix.shape)
+# similarity_scores
+doc_sim = cosine_similarity(tfidf_matrix)
+doc_sim_df = pd.DataFrame(doc_sim)
 
-    # similarity_scores
-    doc_sim = cosine_similarity(tfidf_matrix)
-    doc_sim_df = pd.DataFrame(doc_sim)
+# finding given book id
+book_list = main_data['name'].values
 
-    # finding given book id
-    book_list = main_data['name'].values
+
+def recommender_engine(book_title):
     book_idx = np.where(book_list == str(book_title))[0][0]
-
     book_similarities = doc_sim_df.iloc[book_idx].values
     similar_book_idxs = np.argsort(-book_similarities)[1:3]
     similar_book = book_list[similar_book_idxs]
@@ -182,15 +183,15 @@ def recommend_books(request):
     book_name_set = book_history(request)
     similar_books = []
     for i in book_name_set:
-        similar_book = recommender_engine(i, tfidf=tfidf)
+        similar_book = recommender_engine(i)
         similar_books.append(similar_book)
 
     bookList = [item for elem in similar_books for item in elem]
     sb = set(bookList)
-    print("SB:",sb)
+    print("SB:", sb)
     l = []
     for i in sb:
         l.append(Books.objects.filter(name=i).last())
-    print("L:",l)
+    print("L:", l)
     return render(request, 'books/recommended_books.html',
                   {'MEDIA_URL': MEDIA_URL, "menuindex": 6, "desc": l, "heading": "Recommended Books"})
