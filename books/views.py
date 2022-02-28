@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -105,6 +106,7 @@ def book_history(request):
 
 def normalize_document(doc):
     # lower case and remove special characters\whitespaces
+    nltk.download('punkt')
     doc = re.sub(r'[^a-zA-Z0-9\s]', '', doc, re.I | re.A)
     doc = doc.lower()
     doc = doc.strip()
@@ -171,12 +173,14 @@ def recommender_engine(book_title, tfidf=tfidf):
 
     return similar_book
 
+
 def recommend_books(request):
-    book_name_set=book_history(request)
+    book_name_set = book_history(request)
     similar_books = []
     for i in book_name_set:
-        similar_book=recommender_engine(i, tfidf=tfidf)
+        similar_book = recommender_engine(i, tfidf=tfidf)
         similar_books.append(similar_book)
 
     bookList = [item for elem in similar_books for item in elem]
-    return set(bookList)
+    print(set(bookList))
+    return HttpResponse("These")
