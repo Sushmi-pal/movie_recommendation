@@ -40,12 +40,6 @@ def MyItems(request):
     return render(request, 'books/my_items.html', context)
 
 
-def RecentlyAdded(request):
-    u = User.objects.all()
-    desc = Books.objects.all()
-    return render(request, 'books/recently_added.html', {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 3})
-
-
 class BookDetailView(DetailView):
     model = Books
 
@@ -174,6 +168,13 @@ def recommender_engine(book_title, tfidf=tfidf):
     return similar_book
 
 
+def RecentlyAdded(request):
+    u = User.objects.all()
+    desc = Books.objects.all()
+    return render(request, 'books/recently_added.html',
+                  {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 3, "heading": "Recently Added Books"})
+
+
 def recommend_books(request):
     book_name_set = book_history(request)
     similar_books = []
@@ -182,5 +183,9 @@ def recommend_books(request):
         similar_books.append(similar_book)
 
     bookList = [item for elem in similar_books for item in elem]
-    print(set(bookList))
-    return HttpResponse("These")
+    sb = set(bookList)
+    l = []
+    for i in sb:
+        l.append(Books.objects.filter(name=i).last())
+    return render(request, 'books/recommended_books.html',
+                  {'MEDIA_URL': MEDIA_URL, "menuindex": 6, "desc": l, "heading": "Recommended Books"})
