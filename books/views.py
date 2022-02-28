@@ -149,8 +149,11 @@ def recommender_engine(book_title, tfidf=tfidf):
     norm_corpus = normalized_corpus(list(main_data['description']))
     print(len(norm_corpus))
 
+    df = pd.DataFrame({'description': norm_corpus,
+                       'category': np.array(main_data['category_name'])})
+
     # vectorization
-    tfidf_matrix = tfidf.fit_transform(norm_corpus)
+    tfidf_matrix = tfidf.fit_transform(df['description']+df['category_name'])
     print(tfidf_matrix.shape)
 
     # similarity_scores
