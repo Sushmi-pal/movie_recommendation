@@ -19,3 +19,5 @@ sqlparse==0.4.2
 urllib3==1.26.8
 pandas
 contractions
+scikit-learn
+nltk
