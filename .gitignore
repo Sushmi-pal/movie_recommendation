@@ -1,5 +1,6 @@
 .idea
 db.sqlite3
+media/
 __pycache__/
 */__pycache__/
 book_pic/
