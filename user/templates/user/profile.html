@@ -84,12 +84,6 @@
                                     {% for i in user_category %}
                                     {{ i.name }},
                                     {% endfor %}
-{#                                    {% for category in categories %}#}
-{#                                 <div class="form-check">#}
-{#    <input class="form-check-input" type="checkbox" value="{{ category.name}}" id="{{ category.name}}" {% if category in user_category %}checked{% endif %} name="books">#}
-{#    <label class="form-check-label" for="{{ category.name}}">{{ category.name}}</label>#}
-{#  </div>#}
-{#                             {% endfor %}#}
                                 </fieldset>
                                 <div class="form-group">
                                     <button class="updatebutton" type="submit">Update</button>
