@@ -8,9 +8,9 @@ Features:
 There is CRUD operations on user, profile and books.
 User creation is done by Django default User. In other to change some field which is not on default side, you have to make custom User model. Since here is no any required fields other than default user, default user model is used.
 Profile and user have the relation of OneToOne Field.
-Recommended books is added on recently added section based on the users choice of category.
-
-##Installation
+Recommended books is added on recommended books section based on the viewed books. And the user who has written the description of a specific book can only update and delete that book detail.
+You can change the password by clicking on forgot password button which is on Login Page.
+## Installation
 - You should have python, Django installed on your system.
 - Run the command to install all the requirements.
 ```
