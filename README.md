@@ -46,6 +46,6 @@ exec(open('books_data.py').read())
 - uncomment the above commented code in books/views.py
 - Now again run the server
 ```
-python3 manage.py runserver
+python3 manage.py runserverexec(open('books_data.py').read())
 ```
 - Now since we are taking input for recommendation through history(i.e. most recently viewed books). So, we will need to view few books to start getting recommendation.
