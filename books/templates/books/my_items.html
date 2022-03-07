@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-{% block body %}
 {% load crispy_forms_tags %}
+{% block body %}
+
 
 
            <style>
@@ -65,15 +66,9 @@
                 </div>
             </a>
         </div>
-        <div class="row">
-            <div class="img-holder">
-                <div class="bg"></div>
-                <div class="info-holder">
-
-                </div>
-            </div>
-            <div class="form-holder">
-                <div class="form-content">
+        <div class="row" style="background-color: white;">
+            <div class="form-holder" style="float: right;">
+                <div class="form-content" style="right: 300px;">
                     <div class="form-items">
                         <h3>Book Form</h3>
                         <form method="post" enctype="multipart/form-data">

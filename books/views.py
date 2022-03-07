@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from user.models import Category
 from .forms import BookForm
 from .models import Books, History
+from notifications.models import Notification
 from book_recommendation.settings import MEDIA_URL
 import nltk
 import re
@@ -24,12 +25,15 @@ nltk.download('punkt')
 # Create your views here.
 def MyItems(request):
     if request.method == 'POST':
+        print(request.POST)
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             print('form is valid')
             add_user = form.save(commit=False)
             add_user.info_user = request.user
             add_user.save()
+            Notification.objects.create(message=f'{request.user} have added a new book {request.POST["name"]}',
+                                        user=request.user)
             return redirect("recently_added")
 
     elif request.method == 'GET':
