@@ -21,7 +21,9 @@
 <style>.form-body {
     background-color: #23394A;
 }
-
+#ul-dropdown li:hover{
+      background-color: gray;
+    }
 .website-logo {
     display: inline-block;
     top: 50%;
@@ -2428,14 +2430,64 @@ nav{
 .form-content{
     background-color: lightslategrey;
 }
+.notification {
+            background-color: cornflowerblue;
+            color: white;
+            text-decoration: none;
+            padding: 4px 24px;
+            margin-right: 20px;
+            margin-left: 20px;
+            position: relative;
+            display: inline-block;
+            border-radius: 2px;
+            font-size: 20px;
+        }
+
+        .notification:hover {
+            background: #0b5ed7;
+            color: #fff;
+        }
+
+        .notification .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            padding: 8px 8px;
+            border-radius: 50%;
+            background: red;
+            color: white;
+        }
+
+        .notification-section .dropdown-toggle::after {
+            content: none;
+        }
+
+        .dropdown-toggle::after {
+            color: #fff;
+        }
+
+        #notifications-dropdown li {
+            max-width: 500px;
+            word-wrap: break-word;
+            display: inline-block;
+            white-space: normal;
+        }
+
+        #notifications-dropdown.dropdown-menu {
+            width: 15rem;
+        }
 
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/5135d630a7.js" crossorigin="anonymous"></script>
 </head>
 <nav class="navbar navbar-expand-lg navbar-light" style="position:sticky; color: cornflowerblue; top: 0; z-index: 1">
     <a class="navbar-brand" href="{% url 'home' %}" style="color: white;">𝓑𝓸𝓸𝓴 𝓡𝓮𝓬𝓸𝓶𝓶𝓮𝓷𝓭𝓮𝓻</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fa fa-bars"></i>
+
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
@@ -2454,6 +2506,21 @@ nav{
                 </li>
                 <li class="nav-item">
                     <a {% if menuindex == 5 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'profile' %}">PROFILE</a>
+                </li>
+                <li class="nav-item dropdown notification-section">
+{#                <a href="#" class="notification dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">#}
+{#                    <span><i class="fa fa-bell"></i> </span>#}
+{#                    <span class="badge" id="notification-badge">0</span>#}
+{#                </a>#}
+                <div class="dropdown">
+    <button class="notification dropdown-toggle" id="navbarDropdown" data-toggle="dropdown">
+        <span><i class="fa fa-bell" style="color:black;"></i> </span>
+        <span class="badge" id="notification-badge"></span>
+    </button>
+
+    <ul class="dropdown-menu" id="ul-dropdown" style="width: 275px;">
+    </ul>
+  </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">LOGOUT {{ request.user.username }}</a>
@@ -2478,4 +2545,37 @@ nav{
             <p>© Book Recommender.</p>
         </div>
     </footer>
+<script>
+    var c=0;
+    fetch('http://127.0.0.1:8000/notifications')
+.then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+        console.log(data)
+        data.forEach(function (d){
+            if (d["seen"]===false){
+                c+=1
+                document.getElementById("notification-badge").textContent=c
+            }
+        })
+    })
+
+
+    document.querySelector('.dropdown').onclick=function () {
+        document.getElementById("ul-dropdown").classList.add("open")
+        fetch('http://127.0.0.1:8000/notifications_click')
+.then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+        console.log(data)
+        data.forEach(function (d){
+            var li=document.createElement("li")
+            li.textContent=d.message
+            document.getElementById("ul-dropdown").appendChild(li)
+        })
+    })
+        document.getElementById("notification-badge").textContent=0
+    }</script>
 </html>

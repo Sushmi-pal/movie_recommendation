@@ -13,6 +13,7 @@ from book_recommendation.settings import MEDIA_URL
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from .models import Category, Profile
+from notifications.models import Notification
 
 
 # Create your views here.
@@ -24,6 +25,7 @@ def get_started(request):
 def home(request):
     u = User.objects.all()
     desc = Books.objects.all()
+    notifications=Notification.objects.all()
     return render(request, "books/home.html", {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 1})
 
 
