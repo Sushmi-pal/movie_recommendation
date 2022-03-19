@@ -2512,7 +2512,7 @@ nav{
 {#                    <span><i class="fa fa-bell"></i> </span>#}
 {#                    <span class="badge" id="notification-badge">0</span>#}
 {#                </a>#}
-                <div class="dropdown">
+                <div class="dropdown" onclick="notification_seen('{{ request.user.id }}')">
     <button class="notification dropdown-toggle" id="navbarDropdown" data-toggle="dropdown">
         <span><i class="fa fa-bell" style="color:black;"></i> </span>
         <span class="badge" id="notification-badge"></span>
@@ -2536,6 +2536,7 @@ nav{
         </ul>
     </div>
 </nav>
+
 {% block body %}
 
 
@@ -2546,7 +2547,10 @@ nav{
         </div>
     </footer>
 <script>
-    var c=0;
+    get_unseen_notifications('{{ request.user.id }}')
+
+    function get_unseen_notifications(name){
+        var c=0;
     fetch('http://127.0.0.1:8000/notifications')
 .then((response) => {
       return response.json();
@@ -2554,15 +2558,26 @@ nav{
     .then((data) => {
         console.log(data)
         data.forEach(function (d){
+            console.log("test", d["seen"]===false && d["user"]!==name)
             if (d["seen"]===false){
+                console.log("d", d)
+                if (d["user"]!=name){
+                    console.log("userd", d["user"])
+                console.log("user", name)
                 c+=1
                 document.getElementById("notification-badge").textContent=c
+                }
+                else{
+                    console.log("userd", d["user"])
+                console.log("user", name)
+                }
             }
         })
     })
+    }
 
 
-    document.querySelector('.dropdown').onclick=function () {
+function notification_seen(user_id) {
         document.getElementById("ul-dropdown").classList.add("open")
         fetch('http://127.0.0.1:8000/notifications_click')
 .then((response) => {
@@ -2571,9 +2586,11 @@ nav{
     .then((data) => {
         console.log(data)
         data.forEach(function (d){
-            var li=document.createElement("li")
+            if (d["user"]!=user_id){
+                var li=document.createElement("li")
             li.textContent=d.message
             document.getElementById("ul-dropdown").appendChild(li)
+            }
         })
     })
         document.getElementById("notification-badge").textContent=0
