@@ -11,6 +11,7 @@ class Books(models.Model):
     authors = models.TextField()
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    url = models.URLField(max_length=300)
     info_user = models.ForeignKey(User, on_delete=models.CASCADE)
     book_image = models.ImageField(upload_to='book_pic', default="book_pic/default.png")
 
