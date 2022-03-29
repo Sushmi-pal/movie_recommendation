@@ -135,39 +135,40 @@ def normalize_document(doc):
     doc = ' '.join(filtered_tokens)
     return doc
 
+def get_book_list():
+    tfidf = TfidfVectorizer(ngram_range=(1, 2), min_df=2)
 
-tfidf = TfidfVectorizer(ngram_range=(1, 2), min_df=2)
+    # creating dataframe for recommendation engine
+    books_object = list(Books.objects.values())
+    books_df = pd.DataFrame(books_object)
 
-# creating dataframe for recommendation engine
-books_object = list(Books.objects.values())
-books_df = pd.DataFrame(books_object)
+    category_object = list(Category.objects.values())
+    category_df = pd.DataFrame(category_object)
 
-category_object = list(Category.objects.values())
-category_df = pd.DataFrame(category_object)
+    category_df.columns = ['category_id', 'category_name']
+    main_data = books_df.merge(category_df, how="left", on="category_id")
 
-category_df.columns = ['category_id', 'category_name']
-main_data = books_df.merge(category_df, how="left", on="category_id")
+    # preprocessing
+    normalized_corpus = np.vectorize(normalize_document)
+    norm_corpus = normalized_corpus(list(main_data['description']))
 
-# preprocessing
-normalized_corpus = np.vectorize(normalize_document)
-norm_corpus = normalized_corpus(list(main_data['description']))
+    df = pd.DataFrame({'description': norm_corpus,
+                       'category': np.array(main_data['category_name'])})
 
-df = pd.DataFrame({'description': norm_corpus,
-                   'category': np.array(main_data['category_name'])})
+    # vectorization
+    tfidf_matrix = tfidf.fit_transform(df['description'] + df['category'])
+    print(tfidf_matrix.shape)
 
-# vectorization
-tfidf_matrix = tfidf.fit_transform(df['description'] + df['category'])
-print(tfidf_matrix.shape)
+    # similarity_scores
+    doc_sim = cosine_similarity(tfidf_matrix)
+    doc_sim_df = pd.DataFrame(doc_sim)
 
-# similarity_scores
-doc_sim = cosine_similarity(tfidf_matrix)
-doc_sim_df = pd.DataFrame(doc_sim)
+    # finding given book id
+    book_list = main_data['name'].values
 
-# finding given book id
-book_list = main_data['name'].values
+    return doc_sim_df,book_list
 
-
-def recommender_engine(book_title):
+def recommender_engine(book_title,book_list,doc_sim_df):
     book_idx = np.where(book_list == str(book_title))[0][0]
     book_similarities = doc_sim_df.iloc[book_idx].values
     similar_book_idxs = np.argsort(-book_similarities)[1:3]
@@ -182,17 +183,24 @@ def RecentlyAdded(request):
     return render(request, 'books/recently_added.html',
                   {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 3, "heading": "Recently Added Books"})
 
+def get_recommended_books(book_name_set):
+    doc_sim_df, book_list = get_book_list()
+    similar_books = []
+    for i in book_name_set:
+        similar_book = recommender_engine(i, book_list=book_list, doc_sim_df=doc_sim_df)
+        similar_books.append(similar_book)
+    bookList = [item for elem in similar_books for item in elem]
+    sb = set(bookList)
+    return sb
 
 def recommend_books(request):
     book_name_set = book_history(request)
-    similar_books = []
-    for i in book_name_set:
-        similar_book = recommender_engine(i)
-        similar_books.append(similar_book)
+    try:
+        sb = get_recommended_books(book_name_set)
+    except:
+        print("Error")
+        sb = []
 
-    bookList = [item for elem in similar_books for item in elem]
-    sb = set(bookList)
-    print("SB:", sb)
     l = []
     for i in sb:
         l.append(Books.objects.filter(name=i).last())
