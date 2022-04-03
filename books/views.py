@@ -181,7 +181,7 @@ def RecentlyAdded(request):
     u = User.objects.all()
     desc = Books.objects.all()
     return render(request, 'books/recently_added.html',
-                  {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 3, "heading": "Recently Added Books"})
+                  {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 3, "heading": "Recently Added Movies"})
 
 def get_recommended_books(book_name_set):
     doc_sim_df, book_list = get_book_list()
@@ -206,4 +206,4 @@ def recommend_books(request):
         l.append(Books.objects.filter(name=i).last())
     print("L:", l)
     return render(request, 'books/recommended_books.html',
-                  {'MEDIA_URL': MEDIA_URL, "menuindex": 6, "desc": l, "heading": "Recommended Books"})
+                  {'MEDIA_URL': MEDIA_URL, "menuindex": 6, "desc": l, "heading": "Recommended Movies"})
