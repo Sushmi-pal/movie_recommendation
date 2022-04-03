@@ -6,5 +6,8 @@ from .models import Books
 class BookForm(forms.ModelForm):
     class Meta:
         model = Books
-        fields = ['name', 'url', 'authors', 'description', 'category', 'book_image']
+        fields = ['name', 'url', 'cast', 'description', 'category', 'movie_image']
         exclude = ['info_user']
+        widgets = {
+            'cast': forms.TextInput(attrs={'class': 'form_cast'}),
+        }

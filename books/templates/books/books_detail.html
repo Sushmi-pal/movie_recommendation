@@ -407,7 +407,7 @@ img {
                 <div class="col-lg-8 m-15px-tb">
                     <article class="article">
                         <div class="article-img">
-                            <img src="{{MEDIA_URL}}{{object.book_image}}" title="" alt="">
+                            <img src="{{MEDIA_URL}}{{object.movie_image}}" title="" alt="">
                         </div>
                         <div class="article-title">
                             <h2>{{object.name}}</h2>
@@ -428,20 +428,20 @@ img {
                     </article>
                 </div>
                 <div class="col-lg-4 m-15px-tb blog-aside">
-                    <!-- Author -->
-                    <div class="widget widget-author">
+                    <!-- Cast -->
+                    <div class="widget widget-cast">
                         <div class="widget-title">
-                            <h3>Author</h3>
+                            <h3>Cast</h3>
                         </div>
                         <div class="widget-body">
                             <div class="media align-items-center">
                                 <div class="media-body">
-                                    <h6>{{object.authors}}</h6>
+                                    <h6>{{object.cast}}</h6>
                                 </div>
                             </div>
                               </div>
                     </div>
-                    <!-- End Author -->
+                    <!-- End Cast -->
                 </div>
             </div>
             {% if object.info_user == request.user %}

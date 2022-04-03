@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('authors', models.TextField()),
                 ('description', models.TextField()),
                 ('url', models.URLField(max_length=300)),
-                ('book_image', models.ImageField(default='book_pic/default.png', upload_to='book_pic')),
+                ('book_image', models.ImageField(default='movie_pic/default.png', upload_to='movie_pic')),
                 ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='user.category')),
                 ('info_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
