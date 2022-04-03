@@ -8,3 +8,6 @@ class BookForm(forms.ModelForm):
         model = Books
         fields = ['name', 'url', 'cast', 'description', 'category', 'movie_image']
         exclude = ['info_user']
+        widgets = {
+            'cast': forms.TextInput(attrs={'class': 'form_cast'}),
+        }
