@@ -1,11 +1,11 @@
 from django.forms import ModelForm, TextInput
 from django import forms
-from .models import Books
+from .models import Movies
 
 
-class BookForm(forms.ModelForm):
+class MovieForm(forms.ModelForm):
     class Meta:
-        model = Books
+        model = Movies
         fields = ['name', 'url', 'cast', 'description', 'category', 'movie_image']
         exclude = ['info_user']
         widgets = {

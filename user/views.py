@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.urls import reverse
 
-from books.models import Books
+from books.models import Movies
 from .forms import LoginForm, SignupForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -24,9 +24,9 @@ def get_started(request):
 
 def home(request):
     u = User.objects.all()
-    desc = Books.objects.all()
+    desc = Movies.objects.all()
     notifications=Notification.objects.all()
-    return render(request, "books/home.html", {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 1})
+    return render(request, "movies/home.html", {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 1})
 
 
 def LoginView(request):
@@ -55,11 +55,11 @@ def LoginView(request):
 def SignupView(request):
     if request.method == 'POST':
         print(request.POST)
-        books = request.POST.getlist('books')
-        print(books)
+        movies = request.POST.getlist('movies')
+        print(movies)
 
         form = SignupForm(request.POST)
-        if form.is_valid() and len(books) > 0:
+        if form.is_valid() and len(movies) > 0:
             print('form is valid')
             user = User(username=form.cleaned_data['username'],
                         first_name=form.cleaned_data['first_name'],
@@ -68,7 +68,7 @@ def SignupView(request):
             user.save()
             user.set_password(form.cleaned_data['password'])
             user.save()
-            for i in books:
+            for i in movies:
                 b1 = Category.objects.get_or_create(
                     name=i)  # Results in (<Category: Category object (2)>, True). So, b1[0] to get the queryset
                 b1[0].categories.add(user)
@@ -76,7 +76,7 @@ def SignupView(request):
             Profile.objects.create(user=user)
             return redirect('signin')
         else:
-            messages.error(request, "Please select the books type you like.")
+            messages.error(request, "Please select the movies type you like.")
     elif request.method == 'GET':
         if request.user.is_authenticated:
             return redirect('profile')

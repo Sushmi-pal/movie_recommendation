@@ -19,28 +19,28 @@
 
 <div style="text-align: center; margin-top: 150px;"><h1>{{ heading}}</h1></div>
 <ul class="cards" style="margin-top: 150px;">
-    {% for booksdetail in desc %}
+    {% for moviesdetail in desc %}
 
         <li>
             <a href="" class="card" style="width: 400px; height: 450px;">
-                <img src="/books/media/{{ booksdetail.movie_image }}" class="card__image" alt=""/>
+                <img src="/books/media/{{ moviesdetail.movie_image }}" class="card__image" alt=""/>
                 <div class="card__overlay">
                     <div class="card__header" style="height: 150px;">
                         <svg class="card__arc" xmlns="http://www.w3.org/2000/svg">
                             <path/>
                         </svg>
-                        <img class="card__thumb" src="{{ booksdetail.info_user.profile.image.url }}" alt=""/>
+                        <img class="card__thumb" src="{{ moviesdetail.info_user.profile.image.url }}" alt=""/>
                         <div class="card__header-text">
-                            <h3 class="card__title">{{ booksdetail.name }}</h3>
-                            <span class="card__status">{{ booksdetail.url }}</span>
-                            <span class="card__status">{{ booksdetail.category }}</span>
-                            <span class="card__status">Posted By: {{ booksdetail.info_user.username }}</span>
+                            <h3 class="card__title">{{ moviesdetail.name }}</h3>
+                            <span class="card__status">{{ moviesdetail.url }}</span>
+                            <span class="card__status">{{ moviesdetail.category }}</span>
+                            <span class="card__status">Posted By: {{ moviesdetail.info_user.username }}</span>
                         </div>
                     </div>
-                    <p class="card__description">{{ booksdetail.description }}</p>
+                    <p class="card__description">{{ moviesdetail.description }}</p>
 
                 </div>
-                <a href="{% url 'detail' booksdetail.id %}" class="btn btn-primary">More Detail</a>
+                <a href="{% url 'detail' moviesdetail.id %}" class="btn btn-primary">More Detail</a>
             </a>
 
         </li>
