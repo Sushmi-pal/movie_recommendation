@@ -74,6 +74,13 @@
            <div class="form-holder" style="padding-top: 120px; background-color: lightslategray;">
                   <div class="container">
               <h1 class="title text-center">Personal Information</h1>
+                  {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
                        <div class="row">
                          <div class="col-12">
                            <div class="media mb-4" style="float: left;">

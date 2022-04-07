@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from django.core.exceptions import ValidationError
 
+from .models import Profile
+from django.contrib.auth import password_validation
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150,
@@ -28,9 +30,10 @@ class SignupForm(forms.Form):
                             widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}), label="")
     password = forms.CharField(max_length=128,
                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password',
-                                                                 'id': 'id_password'}), label="")
+                                                                 'id': 'id_password'}), error_messages = {'required':'Not use name as password'}, label="")
     confirm_password = forms.CharField(max_length=128, widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'id': 'id_cpassword', 'placeholder': 'Confirm Password'}), label="")
+
 
 
     def clean_username(self):
@@ -43,6 +46,14 @@ class SignupForm(forms.Form):
         confirm_password = self.cleaned_data['confirm_password']
         if password != confirm_password:
             raise forms.ValidationError('Password donot match')
+
+        if password == confirm_password:
+            try:
+                password_validation.validate_password(password)
+            except ValidationError as e:
+                raise forms.ValidationError(e)
+
+
 
 
 

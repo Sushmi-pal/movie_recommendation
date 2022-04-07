@@ -1,6 +1,8 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from books.models import Movies
 from .forms import LoginForm, SignupForm, UserUpdateForm, ProfileUpdateForm
@@ -14,7 +16,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from .models import Category, Profile
 from notifications.models import Notification
-
+from django.contrib.auth import password_validation
 
 # Create your views here.
 
@@ -59,6 +61,21 @@ def SignupView(request):
         print(movies)
 
         form = SignupForm(request.POST)
+
+
+        password = request.POST["password"]
+        confirm_password = request.POST['confirm_password']
+        if password != confirm_password:
+            messages.error(request, "Password donot match.")
+        if User.objects.filter(username=request.POST['username']).exists():
+            messages.error(request, "This username is taken.")
+        if password == confirm_password:
+            try:
+                password_validation.validate_password(password)
+            except ValidationError as e:
+                messages.error(request, e)
+        if form.is_valid() and len(movies) < 0:
+            messages.error(request, "Please select the movies type you like.")
         if form.is_valid() and len(movies) > 0:
             print('form is valid')
             user = User(username=form.cleaned_data['username'],
@@ -74,9 +91,9 @@ def SignupView(request):
                 b1[0].categories.add(user)
             print('user', user)
             Profile.objects.create(user=user)
-            return redirect('signin')
-        else:
-            messages.error(request, "Please select the movies type you like.")
+            messages.success(request, mark_safe(
+                'Account has been created successfully!, You can now <a href="/user/login">Login</a>'))
+
     elif request.method == 'GET':
         if request.user.is_authenticated:
             return redirect('profile')
@@ -117,4 +134,7 @@ def ProfileView(request):
         'menuindex': 5,
         'p_form': p_form
     }
+    user=request.user.username
+    messages.success(request,
+        f'Welcome, {user}!')
     return render(request, 'user/profile.html', context)
