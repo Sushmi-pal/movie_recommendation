@@ -19,24 +19,19 @@ class LoginForm(forms.Form):
 
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=150,
-                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username',
-                                                             'oninvalid': "this.setCustomValidity('Username is required.')"}),
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
                                label="")
     first_name = forms.CharField(max_length=150,
-                                 widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': 'Name',
-                                                               'oninvalid': "this.setCustomValidity('First Name is required.')"}),
+                                 widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': 'Name'}),
                                  label="")
     email = forms.CharField(max_length=128,
-                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email',
-                                                          'oninvalid': "this.setCustomValidity('Email is required.')"}), label="")
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}), label="")
     password = forms.CharField(max_length=128,
                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password',
-                                                                 'id': 'id_password',
-                                                                 'oninvalid': "this.setCustomValidity('Password is required.')"}),
+                                                                 'id': 'id_password'}),
                                error_messages={'required': 'Not use name as password'}, label="")
     confirm_password = forms.CharField(max_length=128, widget=forms.PasswordInput(
-        attrs={'class': 'form-control', 'id': 'id_cpassword', 'placeholder': 'Confirm Password',
-               'oninvalid': "this.setCustomValidity('Confirm Password field is required.')"}), label="")
+        attrs={'class': 'form-control', 'id': 'id_cpassword', 'placeholder': 'Confirm Password'}), label="")
 
     def clean_username(self):
         if User.objects.filter(username=self.cleaned_data['username']).exists():

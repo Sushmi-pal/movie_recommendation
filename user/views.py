@@ -74,7 +74,7 @@ def SignupView(request):
                 password_validation.validate_password(password)
             except ValidationError as e:
                 messages.error(request, e)
-        if form.is_valid() and len(movies) < 0:
+        if form.is_valid() and len(movies) == 0:
             messages.error(request, "Please select the movies type you like.")
         if form.is_valid() and len(movies) > 0:
             print('form is valid')
