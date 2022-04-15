@@ -1,6 +1,10 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 {% block pagecss %}
+    {% load crispy_forms_tags %}
+{#		<link rel="stylesheet" href="{% static 'css/theme-elements.css' %}">#}
 <style>
+
 
 /* Featured Box */
 .featured-box {
@@ -56,22 +60,14 @@
 	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
 	border-bottom: 4px solid rgba(0, 0, 0, 0.06);
 }
-{##show-password{#}
-{#    position: absolute;#}
-{#    bottom: 300px;#}
-{#    left: 400px;#}
-
+textarea{
+    width: 100px;
+    height: 30px;
+}
 </style>
 {% endblock %}
-
-
 {% block body %}
-    <style>
-    body{
-        overflow: hidden;
-    }
-</style>
-   <div class="row justify-content-center">
+<div class="row justify-content-center">
 {% if messages %}
     {% for message in messages %}
         {% if message.tags == "error"%}
@@ -86,21 +82,23 @@
         {% endif %}
     {% endfor %}
 {% endif %}
-  <div class="col-6" style="width: 30%; margin-top: 10%;">
+  <div class="col-6">
     <div class="featured-box featured-box-primary text-start mt-0">
         <div class="box-content">
-            <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3 text-center">Reset Password</h4>
-            <h3>Password Reset</h3>
-                        <p>Forgotten your password? Enter your email address below, and we’ll email instructions for setting a new one.</p>
-                        <form method="POST" class="form-signin">{% csrf_token %}
-	<h1 class="h3 mb-3 font-weight-normal">Reset password</h1>
-    <input name="email" class="form-control" placeholder="Email address" type="email" id="id_email" required="true">
-	<button class="btn btn-lg btn-primary btn-block" type="submit">Send reset email</button>
+            <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3 text-center">Update</h4>
+            <form method="post" enctype="multipart/form-data" class="sell-form">
+    {% csrf_token %}
+
+    {{form|crispy}}
+    <br>
+    <br>
+    <button type="submit">Submit</button>
 </form>
-    </div>
+
+        </div>
     </div>
   </div>
-
 </div>
+
 {% endblock %}
 

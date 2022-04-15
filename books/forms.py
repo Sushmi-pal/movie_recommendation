@@ -1,13 +1,15 @@
 from django.forms import ModelForm, TextInput
 from django import forms
-from .models import Books
+from .models import Movies
 
 
-class BookForm(forms.ModelForm):
+class MovieForm(forms.ModelForm):
     class Meta:
-        model = Books
+        model = Movies
         fields = ['name', 'url', 'cast', 'description', 'category', 'movie_image']
         exclude = ['info_user']
         widgets = {
-            'cast': forms.TextInput(attrs={'class': 'form_cast'}),
+            'cast': forms.TextInput(attrs={'class': 'form_cast', 'rows': 4, 'cols': 4}),
+            'description': forms.TextInput(attrs={'class': 'form_description', 'rows': 4, 'cols': 4}),
+
         }

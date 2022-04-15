@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+{% load crispy_forms_tags %}
+
+
+          <style>
+               body{
+                 background: #FFFFFF;
+                   overflow: hidden;
+               }
+               label{
+                   font-size: 18px;
+                   font-weight: 600;
+               }
+               input{
+                   margin-bottom: 0.5rem;
+                   padding: 0px 6px;
+                   width: 30%;
+                   height: 32px;
+               }
+
+              .updatebutton{
+                 background: linear-gradient(to right,#2895f1,#0060b1);
+                 color: white;
+                 font-weight: 600;
+                 border-radius: 0.6em;
+                 border: none;
+                 padding: 10px 40px;
+                 font-size: 20px;
+                 margin-bottom: 20px;
+                 margin-left: 8px;
+                 text-decoration: none;
+                 padding: 20px;
+                 outline: none !important;
+              }
+              #updatebutton:hover{
+                     font-size: 21px;
+              }
+              .media{
+              align-items: center;
+              }
+              .account-img{
+                     outline: #0060b1;
+              }
+              .media-body{
+                     display: inline-block;
+                     margin: 30px 0px 0px 28px;
+              }
+              .form-check-input{
+                  margin-left: -12.25rem;
+              }
+              .form-check{
+                  padding-left: 4rem;
+              }
+          </style>
+   <div class="form-body">
+       <div class="website-logo">
+           <a href="index.html">
+               <div class="logo">
+                   <img class="logo-size" src="images/logo-light.svg" alt="">
+               </div>
+           </a>
+       </div>
+       <div class="row">
+           <div class="img-holder" style="width: 40%;">
+               <div class="bg">
+                   <img src="/static/images/img2.jpg" style="width: 100%; height: 100%;">
+               </div>
+               <div class="info-holder">
+
+               </div>
+           </div>
+           <div class="form-holder" style="padding-top: 120px; background-color: lightslategray;">
+                  <div class="container">
+              <h1 class="title text-center">Personal Information</h1>
+                  {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+                       <div class="row">
+                         <div class="col-12">
+                           <div class="media mb-4" style="float: left;">
+                               <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+{#                               <div class="media-body mb-4" style="margin-top: 50%;">#}
+{#                                   <h2 class="account-heading">{{ user.username }}</h2>#}
+{#                                   <p class="text-secondary">{{ user.email }}</p>#}
+{#                               </div>#}
+                           </div>
+                         <div id="form">
+                             <form method ="POST" enctype="multipart/form-data">
+                               {% csrf_token%}
+                               <fieldset class="form-group">
+
+                                   {{ u_form | crispy }}
+                                   {{ p_form | crispy }}
+                                   Movie Categories you like:
+                                   {% for i in user_category %}
+                                   {{ i.name }},
+                                   {% endfor %}
+                               </fieldset>
+                               <div class="form-group" style="margin-left: 30%;">
+                                   <button class="updatebutton" type="submit">Update</button>
+                               </div>
+                           </form>
+                         </div>
+
+                         </div>
+                       </div>
+          </div>
+           </div>
+       </div>
+   </div>
+{% endblock %}
+

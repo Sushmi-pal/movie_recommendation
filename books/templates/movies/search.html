@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block pagecss %}
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+
+  <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/theme-elements.css">
+    <link rel="stylesheet" href="css/theme-shop.css">
+    <link rel="stylesheet" href="css/theme-blog.css">
+
+    <link rel="stylesheet" href="css/default.css">
+
+    <link rel="stylesheet" href="css/custom.css">
+{% endblock %}
+
+{% block body %}
+<div style="float: right; margin: 20px;">
+    <form method="get" action="{% url 'search' %}" class="form-inline ">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query"
+               id="query" style="width: 400px;">
+        <button class="btn btn-primary" type="submit" id="search_button">Search</button>
+    </form>
+</div>
+
+<div class="row" style="margin-top: 5%;
+        margin-left: 10%;">
+  <div class="col">
+    <div class="blog-posts">
+      <div class="row" style="margin-top: 5%;
+        margin-left: 10%;">
+
+        {% for moviesdetail in page_obj %}
+        <div class="col-md-4">
+          <article class="post post-medium border-0 pb-0 mb-5">
+            <div class="post-image">
+              <a href="{% url 'detail' moviesdetail.id %}">
+
+                <img src="{{ MEDIA_URL }}{{ moviesdetail.movie_image }}" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="abc" />
+              </a>
+            </div>
+
+            <div class="post-content">
+
+
+
+              <div class="post-meta">
+                <img class="card__thumb" src="{{ moviesdetail.info_user.profile.image.url }}" alt="" style="width: 20px; height: 20px;"/>
+                  <span class="card__status">Posted By: {{ moviesdetail.info_user.username }}</span>
+                        <div class="card__header-text">
+                            <h3 class="card__title">{{ moviesdetail.name }}</h3>
+                            <p>{{ moviesdetail.url }}</p>
+                            <span class="card__status">{{ moviesdetail.category }}</span>
+                        </div>
+              </div>
+
+            </div>
+          </article>
+        </div>
+{% endfor %}
+
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="pagination" style="float: right; position: relative; bottom: 10%;">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary" href="?page=1">&laquo; first</a>
+            <a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">next</a>
+            <a class="btn btn-primary" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
