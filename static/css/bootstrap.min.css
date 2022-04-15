@@ -2392,15 +2392,15 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff
+    color: white !important;
+    background-color: #333 !important;
+    border-color: #333 !important;
 }
 
 .btn-primary:hover {
-    color: #fff;
-    background-color: #0069d9;
-    border-color: #0062cc
+    color: #333;
+    background-color: white;
+    border-color: white;
 }
 
 .btn-primary.focus, .btn-primary:focus {
@@ -3771,6 +3771,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 }
 
 .nav-link {
+    color: white;
     display: block;
     padding: .5rem 1rem
 }
@@ -3807,7 +3808,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     border-color: transparent
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+.nav-tabs .nav-item.show .nav-tabs .nav-link.active {
     color: #495057;
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #fff

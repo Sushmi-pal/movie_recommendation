@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from django.core.paginator import Paginator
 from user.models import Category
 from .forms import MovieForm
 from .models import Movies, History
@@ -48,9 +48,10 @@ def MyItems(request):
 
 class MovieDetailView(DetailView):
     model = Movies
+    template_name = "movies/movies_detail.html"
 
     def get_context_data(self, **kwargs):
-        History.objects.create(user=self.request.user, book=Movies.objects.get(id=self.kwargs['pk']))
+        History.objects.create(user=self.request.user, movie=Movies.objects.get(id=self.kwargs['pk']))
         context = super(MovieDetailView, self).get_context_data(**kwargs)
         context['MEDIA_URL'] = MEDIA_URL
         return context
@@ -60,6 +61,7 @@ class MovieUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Movies
     fields = ['name', 'cast', 'description', 'category', 'movie_image']
     success_url = '/'
+    template_name = "movies/movies_form.html"
 
     def form_valid(self, form):
         form.instance.info_user = self.request.user
@@ -75,6 +77,7 @@ class MovieUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class MovieDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Movies
     success_url = '/'
+    template_name = "movies/movies_confirm_delete.html"
 
     def test_func(self):
         desc = self.get_object()
@@ -86,20 +89,24 @@ class MovieDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def search(request):
     query = request.GET['query']
     if len(query) > 85:
-        book = []
+        movie = []
     else:
         Mname = Movies.objects.filter(name__icontains=query)
         Mdesc = Movies.objects.filter(description__icontains=query)
-        book = Mname.union(Mdesc)
-    params = {'book': book, 'query': query}
+        movie = Mname.union(Mdesc)
+        paginator = Paginator(list(movie), 9)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+    params = {'page_obj': page_obj, 'query': query}
     return render(request, 'movies/search.html', params)
 
 
-def book_history(request):
+def movie_history(request):
     history = History.objects.filter(user_id=request.user.id).order_by("created_at")[::-1][:5]
+    print("history", history)
     movie_name_list = []
     for h in history:
-        movie_name = h.book.name
+        movie_name = h.movie.name
         movie_name_list.append(movie_name)
     movie_name_set = set(movie_name_list)  # to retrieve only the unique movie name
     return movie_name_set
@@ -164,15 +171,15 @@ def get_movie_list():
     doc_sim_df = pd.DataFrame(doc_sim)
 
     # finding given book id
-    book_list = main_data['name'].values
+    movie_list = main_data['name'].values
 
-    return doc_sim_df,book_list
+    return doc_sim_df,movie_list
 
-def recommender_engine(book_title,book_list,doc_sim_df):
-    book_idx = np.where(book_list == str(book_title))[0][0]
+def recommender_engine(movie_title,movie_list,doc_sim_df):
+    book_idx = np.where(movie_list == str(movie_title))[0][0]
     book_similarities = doc_sim_df.iloc[book_idx].values
     similar_book_idxs = np.argsort(-book_similarities)[1:3]
-    similar_book = book_list[similar_book_idxs]
+    similar_book = movie_list[similar_book_idxs]
 
     return similar_book
 
@@ -180,21 +187,24 @@ def recommender_engine(book_title,book_list,doc_sim_df):
 def RecentlyAdded(request):
     u = User.objects.all()
     desc = Movies.objects.all()
+    paginator = Paginator(desc, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     return render(request, 'movies/recently_added.html',
-                  {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 3, "heading": "Recently Added Movies"})
+                  {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 3, "heading": "Recently Added Movies", "page_obj": page_obj})
 
 def get_recommended_movies(movie_name_set):
-    doc_sim_df, book_list = get_movie_list()
+    doc_sim_df, movie_list = get_movie_list()
     similar_movies = []
     for i in movie_name_set:
-        similar_movie = recommender_engine(i, book_list=book_list, doc_sim_df=doc_sim_df)
+        similar_movie = recommender_engine(i, movie_list=movie_list, doc_sim_df=doc_sim_df)
         similar_movies.append(similar_movie)
-    bookList = [item for elem in similar_movies for item in elem]
-    sb = set(bookList)
+    movieList = [item for elem in similar_movies for item in elem]
+    sb = set(movieList)
     return sb
 
 def recommend_movies(request):
-    movie_name_set = book_history(request)
+    movie_name_set = movie_history(request)
     try:
         sb = get_recommended_movies(movie_name_set)
     except:
@@ -205,5 +215,9 @@ def recommend_movies(request):
     for i in sb:
         l.append(Movies.objects.filter(name=i).last())
     print("L:", l)
+    paginator = Paginator(l, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    print("ppppppppppppppppppp", page_obj)
     return render(request, 'movies/recommended_movies.html',
-                  {'MEDIA_URL': MEDIA_URL, "menuindex": 6, "desc": l, "heading": "Recommended Movies"})
+                  {'MEDIA_URL': MEDIA_URL, "menuindex": 6, "page_obj": page_obj, "heading": "Recommended Movies"})

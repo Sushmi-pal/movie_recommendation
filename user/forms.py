@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from .models import Profile
 from django.contrib.auth import password_validation
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150,
                                widget=forms.TextInput
@@ -18,23 +19,24 @@ class LoginForm(forms.Form):
 
 class SignupForm(forms.Form):
     username = forms.CharField(max_length=150,
-                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username',
+                                                             'oninvalid': "this.setCustomValidity('Username is required.')"}),
                                label="")
     first_name = forms.CharField(max_length=150,
-                                 widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': 'First Name'}),
+                                 widget=forms.TextInput(attrs={'class': "form-control", 'placeholder': 'Name',
+                                                               'oninvalid': "this.setCustomValidity('First Name is required.')"}),
                                  label="")
-    last_name = forms.CharField(max_length=150,
-                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
-                                label="")
     email = forms.CharField(max_length=128,
-                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}), label="")
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email',
+                                                          'oninvalid': "this.setCustomValidity('Email is required.')"}), label="")
     password = forms.CharField(max_length=128,
                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password',
-                                                                 'id': 'id_password'}), error_messages = {'required':'Not use name as password'}, label="")
+                                                                 'id': 'id_password',
+                                                                 'oninvalid': "this.setCustomValidity('Password is required.')"}),
+                               error_messages={'required': 'Not use name as password'}, label="")
     confirm_password = forms.CharField(max_length=128, widget=forms.PasswordInput(
-        attrs={'class': 'form-control', 'id': 'id_cpassword', 'placeholder': 'Confirm Password'}), label="")
-
-
+        attrs={'class': 'form-control', 'id': 'id_cpassword', 'placeholder': 'Confirm Password',
+               'oninvalid': "this.setCustomValidity('Confirm Password field is required.')"}), label="")
 
     def clean_username(self):
         if User.objects.filter(username=self.cleaned_data['username']).exists():
@@ -54,15 +56,13 @@ class SignupForm(forms.Form):
                 raise forms.ValidationError(e)
 
 
-
-
-
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
+
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
@@ -71,4 +71,3 @@ class ProfileUpdateForm(forms.ModelForm):
         labels = {
             "image": " "
         }
-

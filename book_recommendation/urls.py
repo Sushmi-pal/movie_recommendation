@@ -36,7 +36,7 @@ urlpatterns = [
         template_name='registration/password_reset_complete.html'),
          name='password_reset_complete'),
     path("user/", include("user.urls")),
-    path("books/", include("books.urls")),
+    path("movies/", include("books.urls")),
     path("", home, name="home"),
     path("notifications", get_notifications, name="notifications"),
     path("notifications_click", get_notifications_click, name="notifications_click")

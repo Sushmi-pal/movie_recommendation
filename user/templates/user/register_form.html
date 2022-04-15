@@ -1,30 +1,69 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block pagecss %}
+{#		<link rel="stylesheet" href="{% static 'css/theme-elements.css' %}">#}
+<style>
 
+
+/* Featured Box */
+.featured-box {
+	background: #FFF;
+	box-sizing: border-box;
+	border-bottom: 1px solid #DFDFDF;
+	border-left: 1px solid #ECECEC;
+	border-radius: 8px;
+	border-right: 1px solid #ECECEC;
+	box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.05);
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	min-height: 100px;
+	position: relative;
+	text-align: center;
+	z-index: 1;
+}
+
+.featured-box h4 {
+	font-size: 1.3em;
+	font-weight: 400;
+	letter-spacing: -0.7px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.featured-box .box-content {
+	border-radius: 8px;
+	border-top: 1px solid rgba(0, 0, 0, 0.06);
+	border-top-width: 4px;
+	padding: 28.8px;
+	padding: 1.8rem;
+	position: relative;
+}
+
+.featured-box .box-content:not(.box-content-border-0) {
+	top: -1px;
+	border-top-width: 4px;
+}
+
+.featured-box .box-content.box-content-border-0 {
+	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+	border-bottom: 0 !important;
+}
+
+.featured-box .box-content.box-content-border-bottom {
+	top: 1px;
+}
+
+.featured-box .box-content-border-bottom {
+	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+	border-bottom: 4px solid rgba(0, 0, 0, 0.06);
+}
+</style>
+{% endblock %}
 {% block body %}
-    <div class="form-body">
-        <div class="website-logo">
-            <a href="index.html">
-                <div class="logo">
-                    <img class="logo-size" src="images/logo-light.svg" alt="">
-                </div>
-            </a>
-        </div>
-        <div class="row">
-            <div class="img-holder" style="width: 40%;">
-                <div class="bg"></div>
-                <div class="info-holder">
-
-                </div>
-            </div>
-            <div class="form-holder">
-                <div class="form-content" style="height: 70.5%; overflow: scroll; overflow-x: hidden;">
-                    <div class="form-items" style="height: 100%;">
-                        <h3>Register Form </h3>
-                        <div class="page-links">
-                            <a href="{% url 'signin' %}">Login</a><a href="{% url 'signup' %}" class="active">Register</a>
-                        </div>
-
-                    {% if messages %}
+<div class="row justify-content-center">
+{% if messages %}
     {% for message in messages %}
         {% if message.tags == "error"%}
             <div class="alert alert-danger" role="alert">
@@ -38,7 +77,11 @@
         {% endif %}
     {% endfor %}
 {% endif %}
-                        <form method="POST">
+  <div class="col-6">
+    <div class="featured-box featured-box-primary text-start mt-0">
+        <div class="box-content">
+            <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3 text-center">Signup</h4>
+            <form method="POST">
                 {% csrf_token %}
                 {% for field in form_signup %}
                                 <div class="form-group {% if field.errors %}has-error{% endif %}"
@@ -59,6 +102,9 @@
 
                                 </div>
                             {% endfor %}
+            <div id="show-password">
+                <input type="checkbox" onclick="myFunction()"> Show Password
+            </div><br>
                          Password must contains atleast 8 characters.
                                     Password must be alphanumeric
                         <div>
@@ -68,46 +114,29 @@
     <label class="form-check-label" for="{{ category.name}}">{{ category.name}}</label>
   </div>
                              {% endfor %}
+
                         </div>
-                <button type="submit" class="btn btn-primary mt-4">Register</button>
-            </form>
-                    </div>
-                </div>
-            </div>
+
+                <button type="submit" class="btn btn-primary mt-4" style="background-color: #333; border: 1px solid #333;">Register</button>
+         </form>
+
         </div>
     </div>
+  </div>
+</div>
 
 <script>
-var pass = document.querySelector("#id_password")
-var cpass=document.querySelector("#id_cpassword")
-        console.log("pass", cpass)
-        var tailIcon = document.getElementById("tail");
-        tailIcon.className = "fa fa-eye-slash fa-md icon-tail";
-        var ctailIcon = document.getElementById("ctail");
-        ctailIcon.className = "fa fa-eye-slash fa-md icon-tail";
-        pass.setAttribute('type', 'password');
-        cpass.setAttribute('type', 'password')
-        console.log("aaa", cpass.type)
-        document.getElementById("tail").onclick = function () {
-            if (pass.type === "password") {
-                pass.type = "text";
-                tailIcon.className = "fa fa-eye fa-md icon-tail";
 
-            } else {
-                console.log("pass")
-                pass.type = "password";
-                tailIcon.className = "fa fa-eye-slash fa-md icon-tail";
-            }
-        }
-        document.getElementById("ctail").onclick = function () {
-            if (cpass.type === "password") {
-                cpass.type = "text";
-                ctailIcon.className = "fa fa-eye fa-md icon-tail";
-            } else {
-                console.log("pass")
-                cpass.type = "password";
-                ctailIcon.className = "fa fa-eye-slash fa-md icon-tail";
-            }
-        }
+        function myFunction() {
+  var password = document.getElementById("id_password");
+  var confirm_password = document.getElementById("id_cpassword");
+  if (password.type === "password") {
+    password.type = "text";
+    confirm_password.type="text"
+  } else {
+    password.type = "password";
+    confirm_password.type = "password";
+  }
+}
 </script>
 {% endblock %}

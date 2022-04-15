@@ -9,5 +9,7 @@ class MovieForm(forms.ModelForm):
         fields = ['name', 'url', 'cast', 'description', 'category', 'movie_image']
         exclude = ['info_user']
         widgets = {
-            'cast': forms.TextInput(attrs={'class': 'form_cast'}),
+            'cast': forms.TextInput(attrs={'class': 'form_cast', 'rows': 4, 'cols': 4}),
+            'description': forms.TextInput(attrs={'class': 'form_description', 'rows': 4, 'cols': 4}),
+
         }

@@ -18,6 +18,7 @@ from .models import Category, Profile
 from notifications.models import Notification
 from django.contrib.auth import password_validation
 
+
 # Create your views here.
 
 def get_started(request):
@@ -27,7 +28,7 @@ def get_started(request):
 def home(request):
     u = User.objects.all()
     desc = Movies.objects.all()
-    notifications=Notification.objects.all()
+    notifications = Notification.objects.all()
     return render(request, "movies/home.html", {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 1})
 
 
@@ -62,7 +63,6 @@ def SignupView(request):
 
         form = SignupForm(request.POST)
 
-
         password = request.POST["password"]
         confirm_password = request.POST['confirm_password']
         if password != confirm_password:
@@ -79,8 +79,8 @@ def SignupView(request):
         if form.is_valid() and len(movies) > 0:
             print('form is valid')
             user = User(username=form.cleaned_data['username'],
-                        first_name=form.cleaned_data['first_name'],
-                        last_name=form.cleaned_data['last_name'],
+                        first_name=form.cleaned_data['first_name'].split(" ")[0] if len(form.cleaned_data['first_name'].split(" "))>1 else form.cleaned_data['first_name'],
+                        last_name=form.cleaned_data['first_name'].split(" ")[1] if len(form.cleaned_data['first_name'].split(" "))>1 else " ",
                         email=form.cleaned_data['email'])
             user.save()
             user.set_password(form.cleaned_data['password'])
@@ -113,6 +113,7 @@ def LogoutView(request):
 @transaction.atomic
 def ProfileView(request):
     if request.method == 'POST':
+        print(request.POST)
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if u_form.is_valid():
@@ -134,7 +135,7 @@ def ProfileView(request):
         'menuindex': 5,
         'p_form': p_form
     }
-    user=request.user.username
+    user = request.user.username
     messages.success(request,
-        f'Welcome, {user}!')
+                     f'Welcome, {user}!')
     return render(request, 'user/profile.html', context)
