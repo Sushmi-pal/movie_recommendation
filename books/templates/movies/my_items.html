@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block pagecss %}
-{#		<link rel="stylesheet" href="{% static 'css/theme-elements.css' %}">#}
+
 <style>
 
 
@@ -62,6 +62,55 @@
 }
 #id_name, #id_url, #id_cast, #id_description, #id_category{
     width: 500px;
+}
+@media only screen and (max-width: 1000px) {
+
+    .featured-box {
+	background: #FFF;
+	border-bottom: none;
+	border-left: none;
+	border-radius: 0px;
+	border-right: none;
+	box-shadow: none;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+
+}
+
+.featured-box .box-content {
+	border-radius: 8px;
+	border-top: 1px solid rgba(0, 0, 0, 0.06);
+	border-top-width: 4px;
+	position: absolute;
+    width: 500px;
+
+}
+
+.featured-box .box-content:not(.box-content-border-0) {
+	top: -1px;
+	border-top-width: 4px;
+    left: -300px;
+}
+
+.featured-box .box-content.box-content-border-0 {
+	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+	border-bottom: 0 !important;
+}
+
+.featured-box .box-content.box-content-border-bottom {
+	top: 1px;
+}
+
+.featured-box .box-content-border-bottom {
+	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+	border-bottom: 4px solid rgba(0, 0, 0, 0.06);
+}
+#id_name, #id_url, #id_cast, #id_description, #id_category{
+    width: 200px;
+}
+
 }
 </style>
 {% endblock %}
