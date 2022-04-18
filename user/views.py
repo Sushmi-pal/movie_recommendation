@@ -92,7 +92,7 @@ def SignupView(request):
             print('user', user)
             Profile.objects.create(user=user)
             messages.success(request, mark_safe(
-                'Account has been created successfully!, You can now <a href="/user/login">Login</a>'))
+                'Account has been created successfully!, You can now <a class ="login" href="/user/login">Login</a>'))
 
     elif request.method == 'GET':
         if request.user.is_authenticated:

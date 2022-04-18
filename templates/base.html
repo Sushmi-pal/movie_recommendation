@@ -94,7 +94,7 @@
                 </li>
                 <li class="nav-item">
                     <a {% if menuindex == 4 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}
-                                               href="{% url 'my_books' %}" style="color: white;">My Movies</a>
+                                               href="{% url 'my_movies' %}" style="color: white;">My Movies</a>
                 </li>
                 <li class="nav-item dropdown notification-section">
                     <div class="dropdown" onclick="notification_seen('{{ request.user.id }}')">
@@ -152,7 +152,7 @@
 
     function get_unseen_notifications(name) {
         var c = 0;
-        fetch('http://127.0.0.1:8000/notifications')
+        fetch('/notifications')
             .then((response) => {
                 return response.json();
             })
@@ -179,7 +179,7 @@
 
     function notification_seen(user_id) {
         document.getElementById("ul-dropdown").classList.add("open")
-        fetch('http://127.0.0.1:8000/notifications_click')
+        fetch('/notifications_click')
             .then((response) => {
                 return response.json();
             })

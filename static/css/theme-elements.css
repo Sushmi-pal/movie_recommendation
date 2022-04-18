@@ -259,9 +259,9 @@ html body.body .btn:active {
 
 /* Colors */
 .btn-primary {
-	background-color: #CCC;
-	border-color: #CCC #CCC #b3b2b2;
-	color: #FFF;
+	background-color: #333 !important;
+	border-color: #333 !important;
+	color: white !important;
 }
 
 .btn-primary:hover, .btn-primary.hover {

@@ -10,15 +10,20 @@
 <link rel="stylesheet" href="{% static 'css/theme-shop.css' %}">
 <link rel="stylesheet" href="{% static 'css/theme-blog.css' %}">
 
-<link rel="stylesheet" href="{% static 'css/skins/default.css' %}">
+<style>
+    .change-color{
+        background-color: #333 !important;
+        border-color: #333 !important;
+    }
+</style>
 
-<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
 
 <div style="float: right; margin: 20px;">
     <form method="get" action="{% url 'search' %}" class="form-inline ">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query"
                id="query" style="width: 400px;">
-        <button class="btn btn-primary" type="submit" id="search_button">Search</button>
+        <button class="btn btn-primary change-color" type="submit" id="search_button">Search</button>
     </form>
 </div>
 
@@ -27,10 +32,11 @@
     <div class="col">
         <div class="blog-posts">
             <div class="row" style="margin-top: 5%;
-        margin-left: 10%;">
+        margin-left: 5%;
+padding-bottom: 100px;">
 
                 {% for moviesdetail in page_obj %}
-                    <div class="col-md-4">
+                    <div class="col-md-4" style="width: 400px; padding-left: 50px;">
                         <article class="post post-medium border-0 pb-0 mb-5">
                             <div class="post-image">
                                 <a href="{% url 'detail' moviesdetail.id %}">
@@ -69,14 +75,14 @@
 <div class="pagination" style="float: right; position: relative; bottom: 10%;">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a class="btn btn-primary" href="?page=1">&laquo; first</a>
-            <a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}">previous</a>
+            <a class="btn btn-primary change-color" href="?page=1">&laquo; first</a>
+            <a class="btn btn-primary change-color" href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
 
         {% if page_obj.has_next %}
-            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">next</a>
-            <a class="btn btn-primary" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            <a class="btn btn-primary change-color" href="?page={{ page_obj.next_page_number }}">next</a>
+            <a class="btn btn-primary change-color" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
