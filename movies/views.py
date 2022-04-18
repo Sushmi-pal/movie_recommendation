@@ -32,7 +32,7 @@ def MyItems(request):
             add_user = form.save(commit=False)
             add_user.info_user = request.user
             add_user.save()
-            Notification.objects.create(message=f'{request.user} have added a new book {request.POST["name"]}',
+            Notification.objects.create(message=f'{request.user} have added a new movie {request.POST["name"]}',
                                         user=request.user)
             return redirect("recently_added")
 
@@ -170,18 +170,18 @@ def get_movie_list():
     doc_sim = cosine_similarity(tfidf_matrix)
     doc_sim_df = pd.DataFrame(doc_sim)
 
-    # finding given book id
+    # finding given movie id
     movie_list = main_data['name'].values
 
     return doc_sim_df,movie_list
 
 def recommender_engine(movie_title,movie_list,doc_sim_df):
-    book_idx = np.where(movie_list == str(movie_title))[0][0]
-    book_similarities = doc_sim_df.iloc[book_idx].values
-    similar_book_idxs = np.argsort(-book_similarities)[1:3]
-    similar_book = movie_list[similar_book_idxs]
+    movie_idx = np.where(movie_list == str(movie_title))[0][0]
+    movie_similarities = doc_sim_df.iloc[movie_idx].values
+    similar_movie_idxs = np.argsort(-movie_similarities)[1:3]
+    similar_movie = movie_list[similar_movie_idxs]
 
-    return similar_book
+    return similar_movie
 
 
 def RecentlyAdded(request):

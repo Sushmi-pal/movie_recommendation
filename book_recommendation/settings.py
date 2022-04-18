@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user',
     'crispy_forms',
-    'books',
+    'movies',
     'notifications',
     'rest_framework'
 ]
@@ -125,7 +125,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # It shows the message which is to be in sent in mail id in production on the console.
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/books/media/'
+MEDIA_URL = '/movies/media/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS=( os.path.join(BASE_DIR,'static'),)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'book_recommendation.settings'
