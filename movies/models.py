@@ -15,6 +15,7 @@ class Movies(models.Model):
     info_user = models.ForeignKey(User, on_delete=models.CASCADE)
     movie_image = models.ImageField(upload_to='movie_pic', default="movie_pic/default.png")
 
+
 class History(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movies, on_delete=models.CASCADE)

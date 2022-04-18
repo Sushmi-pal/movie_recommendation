@@ -2,103 +2,104 @@
 {% load static %}
 {% block pagecss %}
     {% load crispy_forms_tags %}
-{#		<link rel="stylesheet" href="{% static 'css/theme-elements.css' %}">#}
-<style>
+    {#		<link rel="stylesheet" href="{% static 'css/theme-elements.css' %}">#}
+    <style>
 
 
-/* Featured Box */
-.featured-box {
-	background: #FFF;
-	box-sizing: border-box;
-	border-bottom: 1px solid #DFDFDF;
-	border-left: 1px solid #ECECEC;
-	border-radius: 8px;
-	border-right: 1px solid #ECECEC;
-	box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.05);
-	margin-bottom: 20px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 20px;
-	min-height: 100px;
-	position: relative;
-	text-align: center;
-	z-index: 1;
-}
+        /* Featured Box */
+        .featured-box {
+            background: #FFF;
+            box-sizing: border-box;
+            border-bottom: 1px solid #DFDFDF;
+            border-left: 1px solid #ECECEC;
+            border-radius: 8px;
+            border-right: 1px solid #ECECEC;
+            box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            min-height: 100px;
+            position: relative;
+            text-align: center;
+            z-index: 1;
+        }
 
-.featured-box h4 {
-	font-size: 1.3em;
-	font-weight: 400;
-	letter-spacing: -0.7px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
+        .featured-box h4 {
+            font-size: 1.3em;
+            font-weight: 400;
+            letter-spacing: -0.7px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
 
-.featured-box .box-content {
-	border-radius: 8px;
-	border-top: 1px solid rgba(0, 0, 0, 0.06);
-	border-top-width: 4px;
-	padding: 28.8px;
-	padding: 1.8rem;
-	position: relative;
-}
+        .featured-box .box-content {
+            border-radius: 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            border-top-width: 4px;
+            padding: 28.8px;
+            padding: 1.8rem;
+            position: relative;
+        }
 
-.featured-box .box-content:not(.box-content-border-0) {
-	top: -1px;
-	border-top-width: 4px;
-}
+        .featured-box .box-content:not(.box-content-border-0) {
+            top: -1px;
+            border-top-width: 4px;
+        }
 
-.featured-box .box-content.box-content-border-0 {
-	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
-	border-bottom: 0 !important;
-}
+        .featured-box .box-content.box-content-border-0 {
+            border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+            border-bottom: 0 !important;
+        }
 
-.featured-box .box-content.box-content-border-bottom {
-	top: 1px;
-}
+        .featured-box .box-content.box-content-border-bottom {
+            top: 1px;
+        }
 
-.featured-box .box-content-border-bottom {
-	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
-	border-bottom: 4px solid rgba(0, 0, 0, 0.06);
-}
-textarea{
-    width: 100px;
-    height: 30px;
-}
-</style>
+        .featured-box .box-content-border-bottom {
+            border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+            border-bottom: 4px solid rgba(0, 0, 0, 0.06);
+        }
+
+        textarea {
+            width: 100px;
+            height: 30px;
+        }
+    </style>
 {% endblock %}
 {% block body %}
-<div class="row justify-content-center">
-{% if messages %}
-    {% for message in messages %}
-        {% if message.tags == "error"%}
-            <div class="alert alert-danger" role="alert">
-  {{ message }}
-</div>
+    <div class="row justify-content-center">
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == "error" %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+                {% if message.tags == "success" %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
         {% endif %}
-        {% if message.tags == "success"%}
-            <div class="alert alert-success" role="alert">
-  {{ message }}
-</div>
-        {% endif %}
-    {% endfor %}
-{% endif %}
-  <div class="col-6">
-    <div class="featured-box featured-box-primary text-start mt-0">
-        <div class="box-content">
-            <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3 text-center">Update</h4>
-            <form method="post" enctype="multipart/form-data" class="sell-form">
-    {% csrf_token %}
+        <div class="col-6">
+            <div class="featured-box featured-box-primary text-start mt-0">
+                <div class="box-content">
+                    <h4 class="color-primary font-weight-semibold text-4 text-uppercase mb-3 text-center">Update</h4>
+                    <form method="post" enctype="multipart/form-data" class="sell-form">
+                        {% csrf_token %}
 
-    {{form|crispy}}
-    <br>
-    <br>
-    <button type="submit">Submit</button>
-</form>
+                        {{ form|crispy }}
+                        <br>
+                        <br>
+                        <button type="submit">Submit</button>
+                    </form>
 
+                </div>
+            </div>
         </div>
     </div>
-  </div>
-</div>
 
 {% endblock %}
 

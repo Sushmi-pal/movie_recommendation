@@ -8,10 +8,6 @@ class UserSerializer(serializers.Serializer):
 
 
 class NotificationSerializer(serializers.ModelSerializer):
-    # message = serializers.CharField(max_length=1000)
-    # created_at = serializers.DateTimeField()
-    # seen = serializers.BooleanField(default=False)
-    # username = serializers.ReadOnlyField()
     class Meta:
         model = Notification
         fields = '__all__'

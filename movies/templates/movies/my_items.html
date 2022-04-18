@@ -3,133 +3,138 @@
 {% load crispy_forms_tags %}
 {% block pagecss %}
 
-<style>
+    <style>
 
 
-/* Featured Box */
-.featured-box {
-	background: #FFF;
-	box-sizing: border-box;
-	border-bottom: 1px solid #DFDFDF;
-	border-left: 1px solid #ECECEC;
-	border-radius: 8px;
-	border-right: 1px solid #ECECEC;
-	box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.05);
-	margin-bottom: 20px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 20px;
-	min-height: 100px;
-	position: relative;
-	text-align: center;
-}
+        /* Featured Box */
+        .featured-box {
+            background: #FFF;
+            box-sizing: border-box;
+            border-bottom: 1px solid #DFDFDF;
+            border-left: 1px solid #ECECEC;
+            border-radius: 8px;
+            border-right: 1px solid #ECECEC;
+            box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            min-height: 100px;
+            position: relative;
+            text-align: center;
+        }
 
-.featured-box h4 {
-	font-size: 1.3em;
-	font-weight: 400;
-	letter-spacing: -0.7px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
+        .featured-box h4 {
+            font-size: 1.3em;
+            font-weight: 400;
+            letter-spacing: -0.7px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
 
-.featured-box .box-content {
-	border-radius: 8px;
-	border-top: 1px solid rgba(0, 0, 0, 0.06);
-	border-top-width: 4px;
-	padding: 28.8px;
-	padding: 1.8rem;
-	position: relative;
-}
+        .featured-box .box-content {
+            border-radius: 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            border-top-width: 4px;
+            padding: 28.8px;
+            padding: 1.8rem;
+            position: relative;
+        }
 
-.featured-box .box-content:not(.box-content-border-0) {
-	top: -1px;
-	border-top-width: 4px;
-}
+        .featured-box .box-content:not(.box-content-border-0) {
+            top: -1px;
+            border-top-width: 4px;
+        }
 
-.featured-box .box-content.box-content-border-0 {
-	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
-	border-bottom: 0 !important;
-}
+        .featured-box .box-content.box-content-border-0 {
+            border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+            border-bottom: 0 !important;
+        }
 
-.featured-box .box-content.box-content-border-bottom {
-	top: 1px;
-}
+        .featured-box .box-content.box-content-border-bottom {
+            top: 1px;
+        }
 
-.featured-box .box-content-border-bottom {
-	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
-	border-bottom: 4px solid rgba(0, 0, 0, 0.06);
-}
-#id_name, #id_url, #id_cast, #id_description, #id_category{
-    width: 500px;
-}
-@media only screen and (max-width: 1000px) {
+        .featured-box .box-content-border-bottom {
+            border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+            border-bottom: 4px solid rgba(0, 0, 0, 0.06);
+        }
 
-    .featured-box {
-	background: #FFF;
-	border-bottom: none;
-	border-left: none;
-	border-radius: 0px;
-	border-right: none;
-	box-shadow: none;
-	margin-bottom: 20px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 20px;
+        #id_name, #id_url, #id_cast, #id_description, #id_category {
+            width: 500px;
+        }
 
-}
+        @media only screen and (max-width: 1000px) {
 
-.featured-box .box-content {
-	border-radius: 8px;
-	border-top: 1px solid rgba(0, 0, 0, 0.06);
-	border-top-width: 4px;
-	position: absolute;
-    width: 500px;
+            .featured-box {
+                background: #FFF;
+                border-bottom: none;
+                border-left: none;
+                border-radius: 0px;
+                border-right: none;
+                box-shadow: none;
+                margin-bottom: 20px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 20px;
 
-}
+            }
 
-.featured-box .box-content:not(.box-content-border-0) {
-	top: -1px;
-	border-top-width: 4px;
-    left: -300px;
-}
+            .featured-box .box-content {
+                border-radius: 8px;
+                border-top: 1px solid rgba(0, 0, 0, 0.06);
+                border-top-width: 4px;
+                position: absolute;
+                width: 500px;
 
-.featured-box .box-content.box-content-border-0 {
-	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
-	border-bottom: 0 !important;
-}
+            }
 
-.featured-box .box-content.box-content-border-bottom {
-	top: 1px;
-}
+            .featured-box .box-content:not(.box-content-border-0) {
+                top: -1px;
+                border-top-width: 4px;
+                left: -300px;
+            }
 
-.featured-box .box-content-border-bottom {
-	border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
-	border-bottom: 4px solid rgba(0, 0, 0, 0.06);
-}
-#id_name, #id_url, #id_cast, #id_description, #id_category{
-    width: 200px;
-}
+            .featured-box .box-content.box-content-border-0 {
+                border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+                border-bottom: 0 !important;
+            }
 
-}
-</style>
+            .featured-box .box-content.box-content-border-bottom {
+                top: 1px;
+            }
+
+            .featured-box .box-content-border-bottom {
+                border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+                border-bottom: 4px solid rgba(0, 0, 0, 0.06);
+            }
+
+            #id_name, #id_url, #id_cast, #id_description, #id_category {
+                width: 200px;
+            }
+
+        }
+    </style>
 {% endblock %}
 {% block body %}
-<div class="row justify-content-center" style="width: 1200px; margin-top: 20px; margin-left: 10%;">
+    <div class="row justify-content-center" style="width: 1200px; margin-top: 20px; margin-left: 10%;">
 
-  <div class="col-6">
-    <div class="featured-box featured-box-primary text-start mt-0">
-        <div class="box-content">
-            <h3>Movie Form</h3>
-                        <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+        <div class="col-6">
+            <div class="featured-box featured-box-primary text-start mt-0">
+                <div class="box-content">
+                    <h3>Movie Form</h3>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
 
-        {{ form|crispy }}
-        <br>
-        <button type="submit" class="btn btn-primary" style="background-color: #333; border-color: #333;">Submit</button>
-    </form>
+                        {{ form|crispy }}
+                        <br>
+                        <button type="submit" class="btn btn-primary"
+                                style="background-color: #333; border-color: #333;">Submit
+                        </button>
+                    </form>
 
+                </div>
+            </div>
         </div>
     </div>
-  </div>
-</div>
 {% endblock %}

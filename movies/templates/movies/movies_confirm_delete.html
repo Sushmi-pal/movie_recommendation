@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
 
-   <fieldset>
-       <legend>
-           Delete
-       </legend>
-       <h2>Are you sure to delete {{object.name}}</h2>
-   </fieldset>
-    <button class="btn btn-outline-danger" type="submit">Yes</button>
-    <a href="{% url 'detail' object.id %}" class="btn btn-outline-secondary" >Cancel</a>
-</form>
+        <fieldset>
+            <legend>
+                Delete
+            </legend>
+            <h2>Are you sure to delete {{ object.name }}</h2>
+        </fieldset>
+        <button class="btn btn-outline-danger" type="submit">Yes</button>
+        <a href="{% url 'detail' object.id %}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
 {% endblock %}

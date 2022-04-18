@@ -142,6 +142,7 @@ def normalize_document(doc):
     doc = ' '.join(filtered_tokens)
     return doc
 
+
 def get_movie_list():
     tfidf = TfidfVectorizer(ngram_range=(1, 2), min_df=2)
 
@@ -173,9 +174,10 @@ def get_movie_list():
     # finding given movie id
     movie_list = main_data['name'].values
 
-    return doc_sim_df,movie_list
+    return doc_sim_df, movie_list
 
-def recommender_engine(movie_title,movie_list,doc_sim_df):
+
+def recommender_engine(movie_title, movie_list, doc_sim_df):
     movie_idx = np.where(movie_list == str(movie_title))[0][0]
     movie_similarities = doc_sim_df.iloc[movie_idx].values
     similar_movie_idxs = np.argsort(-movie_similarities)[1:3]
@@ -191,7 +193,9 @@ def RecentlyAdded(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'movies/recently_added.html',
-                  {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 3, "heading": "Recently Added Movies", "page_obj": page_obj})
+                  {'desc': desc, 'u': u, 'MEDIA_URL': MEDIA_URL, "menuindex": 3, "heading": "Recently Added Movies",
+                   "page_obj": page_obj})
+
 
 def get_recommended_movies(movie_name_set):
     doc_sim_df, movie_list = get_movie_list()
@@ -202,6 +206,7 @@ def get_recommended_movies(movie_name_set):
     movieList = [item for elem in similar_movies for item in elem]
     sb = set(movieList)
     return sb
+
 
 def recommend_movies(request):
     movie_name_set = movie_history(request)

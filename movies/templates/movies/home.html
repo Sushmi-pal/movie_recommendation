@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 {% block body %}
-{#    <p>With the Book Recommender app, you can view personalized recommendations based on your favorite categories chosen#}
-{#        during registration and previously read movies.</p>#}
-{#    {% include "movies/recently_added_base.html" %}#}
-    <div>
-    <div style="float: left; width: 50%; border: 1px solid black; height: 100%;">
-        <p style="margin-top: 25%;">With the Movie Recommender app, you can view personalized recommendations based on your favorite categories chosen and history.</p>
 
-    </div>
-    <div style="float: right; width: 50%; border: 1px solid black; height: 100%;">
-        <img style="width: 100%; height: 100%" src="{% static 'images/books_recommender.jpeg' %}" />
-    </div>
+    <div>
+        <div style="float: left; width: 50%; border: 1px solid black; height: 100%;">
+            <p style="margin-top: 25%;">With the Movie Recommender app, you can view personalized recommendations based
+                on your favorite categories chosen and history.</p>
+
+        </div>
+        <div style="float: right; width: 50%; border: 1px solid black; height: 100%;">
+            <img style="width: 100%; height: 100%" src="{% static 'images/books_recommender.jpeg' %}"/>
+        </div>
     </div>
 {% endblock %}

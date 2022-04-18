@@ -1,18 +1,18 @@
 {% load static %}
 <!-- Vendor CSS -->
-    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 
-    <!-- Theme CSS -->
-    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-    <link rel="stylesheet" href="{% static 'css/theme-elements.css' %}">
-    <link rel="stylesheet" href="{% static 'css/theme-shop.css' %}">
-    <link rel="stylesheet" href="{% static 'css/theme-blog.css' %}">
+<!-- Theme CSS -->
+<link rel="stylesheet" href="{% static 'css/theme.css' %}">
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+<link rel="stylesheet" href="{% static 'css/theme-elements.css' %}">
+<link rel="stylesheet" href="{% static 'css/theme-shop.css' %}">
+<link rel="stylesheet" href="{% static 'css/theme-blog.css' %}">
 
-    <link rel="stylesheet" href="{% static 'css/skins/default.css' %}">
+<link rel="stylesheet" href="{% static 'css/skins/default.css' %}">
 
-    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
 
 <div style="float: right; margin: 20px;">
     <form method="get" action="{% url 'search' %}" class="form-inline ">
@@ -24,46 +24,46 @@
 
 <div class="row" style="margin-top: 5%;
         margin-left: 10%;">
-  <div class="col">
-    <div class="blog-posts">
-      <div class="row" style="margin-top: 5%;
+    <div class="col">
+        <div class="blog-posts">
+            <div class="row" style="margin-top: 5%;
         margin-left: 10%;">
 
-        {% for moviesdetail in page_obj %}
-        <div class="col-md-4">
-          <article class="post post-medium border-0 pb-0 mb-5">
-            <div class="post-image">
-              <a href="{% url 'detail' moviesdetail.id %}">
+                {% for moviesdetail in page_obj %}
+                    <div class="col-md-4">
+                        <article class="post post-medium border-0 pb-0 mb-5">
+                            <div class="post-image">
+                                <a href="{% url 'detail' moviesdetail.id %}">
 
-                <img src="{{ MEDIA_URL }}{{ moviesdetail.movie_image }}" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="abc" />
-              </a>
+                                    <img src="{{ MEDIA_URL }}{{ moviesdetail.movie_image }}"
+                                         class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="abc"/>
+                                </a>
+                            </div>
+
+                            <div class="post-content">
+
+
+                                <div class="post-meta">
+                                    <img class="card__thumb" src="{{ moviesdetail.info_user.profile.image.url }}" alt=""
+                                         style="width: 20px; height: 20px;"/>
+                                    <span class="card__status">Posted By: {{ moviesdetail.info_user.username }}</span>
+                                    <div class="card__header-text">
+                                        <h3 class="card__title">{{ moviesdetail.name }}</h3>
+                                        <p>{{ moviesdetail.url }}</p>
+                                        <span class="card__status">{{ moviesdetail.category }}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+
+
             </div>
 
-            <div class="post-content">
-
-
-
-              <div class="post-meta">
-                <img class="card__thumb" src="{{ moviesdetail.info_user.profile.image.url }}" alt="" style="width: 20px; height: 20px;"/>
-                  <span class="card__status">Posted By: {{ moviesdetail.info_user.username }}</span>
-                        <div class="card__header-text">
-                            <h3 class="card__title">{{ moviesdetail.name }}</h3>
-                            <p>{{ moviesdetail.url }}</p>
-                            <span class="card__status">{{ moviesdetail.category }}</span>
-                        </div>
-              </div>
-
-            </div>
-          </article>
         </div>
-{% endfor %}
-
-
-
-      </div>
-
     </div>
-  </div>
 </div>
 
 <div class="pagination" style="float: right; position: relative; bottom: 10%;">
