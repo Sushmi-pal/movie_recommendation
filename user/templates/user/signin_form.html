@@ -24,7 +24,6 @@
 	min-height: 100px;
 	position: relative;
 	text-align: center;
-	z-index: 1;
 }
 
 .featured-box h4 {
@@ -103,9 +102,17 @@ small a{
                                      id="group_{{ field.name }}">
                                     <label for="id_{{ field.name }}" class="control-label">{{ field.label }}</label>
                                     <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
+                                    {% if field.name == "password" %}
+                                            <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"></i></span>
+                                        </div>
+                                    {% elif field.name == "username" %}
+                                            <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                                         </div>
+
+                                        {% endif %}
+
                                         {{ field }}
                                         {% if field.name == "password" %}
                                             <div id="tail"></div>

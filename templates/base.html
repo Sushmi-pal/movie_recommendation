@@ -71,6 +71,16 @@
                 <li class="nav-item">
                     <a {% if menuindex == 1 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %} href="{% url 'home' %}" style="color: white;">HOME </a>
                 </li>
+
+                <li class="nav-item">
+                    <a {% if menuindex == 3 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'recently_added' %}" style="color: white;">Recently Added </a>
+                </li>
+                <li class="nav-item">
+                    <a {% if menuindex == 6 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'recommend' %}" style="color: white;">Recommended Movies </a>
+                </li>
+                <li class="nav-item">
+                    <a {% if menuindex == 4 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'my_books' %}" style="color: white;">My Movies</a>
+                </li>
                 <li class="nav-item dropdown notification-section">
                 <div class="dropdown" onclick="notification_seen('{{ request.user.id }}')">
     <button data-toggle="dropdown" style="background-color: #333; margin-top: 30%; width: 40px;height: 40px;">
@@ -81,15 +91,6 @@
     <ul class="dropdown-menu" id="ul-dropdown" style="width: 275px;">
     </ul>
   </div>
-                </li>
-                <li class="nav-item">
-                    <a {% if menuindex == 3 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'recently_added' %}" style="color: white;">Recently Added </a>
-                </li>
-                <li class="nav-item">
-                    <a {% if menuindex == 6 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'recommend' %}" style="color: white;">Recommended Movies </a>
-                </li>
-                <li class="nav-item">
-                    <a {% if menuindex == 4 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'my_books' %}" style="color: white;">My Movies</a>
                 </li>
                 <li class="nav-item">
                     <a {% if menuindex == 5 %} class="active-me nav-link"{% else %}class="nav-link" {% endif %}  href="{% url 'profile' %}" style="color: white;">PROFILE</a>
