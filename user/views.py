@@ -4,7 +4,7 @@ from django.template.loader import get_template
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from books.models import Movies
+from movies.models import Movies
 from .forms import LoginForm, SignupForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
