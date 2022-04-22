@@ -10,7 +10,7 @@ from user.models import Category
 from .forms import MovieForm
 from .models import Movies, History
 from notifications.models import Notification
-from book_recommendation.settings import MEDIA_URL
+from movie_recommendation.settings import MEDIA_URL
 import nltk
 import re
 import numpy as np

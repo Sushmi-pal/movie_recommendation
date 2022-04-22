@@ -1,5 +1,5 @@
 """
-ASGI config for book_recommendation project.
+ASGI config for movie_recommendation project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'book_recommendation.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'movie_recommendation.settings')
 
 application = get_asgi_application()

@@ -5,7 +5,7 @@ from books.models import Books
 from user.models import Category
 import random
 
-book_data = pd.read_csv("/home/user/PycharmProjects/book_recommendation/book_models.csv")
+book_data = pd.read_csv("//book_models.csv")
 
 for row_data in range(len(book_data)):
     cat_id = Category.objects.filter(name=book_data.iloc[row_data]['Genres']).first()

@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.urls import reverse
@@ -11,7 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import transaction
-from book_recommendation.settings import MEDIA_URL
+from movie_recommendation.settings import MEDIA_URL
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from .models import Category, Profile
@@ -36,6 +37,8 @@ def LoginView(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             return redirect('/user/profile')
+        else:
+            form = LoginForm()
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -48,10 +51,7 @@ def LoginView(request):
                 return redirect('/user/profile/')
             else:
                 print('Not authenticated')
-    elif request.method == 'GET':
-        if request.user.is_authenticated:
-            return redirect('/user/profile/')
-        form = LoginForm()
+
     return render(request, 'user/signin_form.html', {'form_login': form, "menuindex": 2})
 
 
@@ -63,7 +63,8 @@ def SignupView(request):
 
         form = SignupForm(request.POST)
 
-        password = request.POST["password"]
+        password = request.POST["password"]                 #a={"b":1, "c":2}
+                                                            # a["b"] returns 1
         confirm_password = request.POST['confirm_password']
         if password != confirm_password:
             messages.error(request, "Password donot match.")
@@ -76,10 +77,10 @@ def SignupView(request):
                 messages.error(request, e)
         if form.is_valid() and len(movies) == 0:
             messages.error(request, "Please select the movies type you like.")
-        if form.is_valid() and len(movies) > 0:
+        if form.is_valid() and len(movies) > 0: # saves user info to table
             print('form is valid')
             user = User(username=form.cleaned_data['username'],
-                        first_name=form.cleaned_data['first_name'].split(" ")[0] if len(form.cleaned_data['first_name'].split(" "))>1 else form.cleaned_data['first_name'],
+                        first_name=form.cleaned_data['first_name'].split(" ")[0],
                         last_name=form.cleaned_data['first_name'].split(" ")[1] if len(form.cleaned_data['first_name'].split(" "))>1 else " ",
                         email=form.cleaned_data['email'])
             user.save()
@@ -131,7 +132,7 @@ def ProfileView(request):
     context = {
         'u_form': u_form,
         'user_category': request.user.category_set.all(),
-        'categories': Category.objects.all(),
+        # 'categories': Category.objects.all(),
         'menuindex': 5,
         'p_form': p_form
     }
