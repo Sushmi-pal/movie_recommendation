@@ -42,6 +42,11 @@ def LoginView(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
+            try:
+                User.objects.get(username=form.cleaned_data['username'])
+            except:
+                messages.error(request, "User doesn't exist")
+
 
             user = authenticate(username=form.cleaned_data['username'],
                                 password=form.cleaned_data['password'])
@@ -50,7 +55,9 @@ def LoginView(request):
                 login(request, user)
                 return redirect('/user/profile/')
             else:
-                print('Not authenticated')
+                print("not")
+                messages.error(request, "Incorrect password")
+
 
     return render(request, 'user/signin_form.html', {'form_login': form, "menuindex": 2})
 

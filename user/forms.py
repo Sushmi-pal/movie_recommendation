@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from .models import Profile
-from django.contrib.auth import password_validation
+from django.contrib.auth import password_validation, authenticate
 
 
 class LoginForm(forms.Form):
@@ -15,6 +15,7 @@ class LoginForm(forms.Form):
                                widget=forms.PasswordInput
                                (attrs={'placeholder': 'Password',
                                        'class': 'form-control', 'id': 'id_password'}), label="")
+
 
 
 class SignupForm(forms.Form):

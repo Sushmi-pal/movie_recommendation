@@ -131,6 +131,7 @@ STATICFILES_DIRS=( os.path.join(BASE_DIR,'static'),)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'movie_recommendation.settings'
 LOGIN_REDIRECT_URL='signin'
 
+# Sends reset password link to gmail account
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "banjarabibika@gmail.com"
 EMAIL_HOST_PASSWORD = "banjarabibika$$"
