@@ -1,14 +1,14 @@
-# Book Recommender
-With the Book Recommender app, you can view personalized recommendations based on your favorite categories chosen
-        during registration and previously read books.
+# Movie Recommender
+With the Movie Recommender app, you can view personalized recommendations based on your favorite categories chosen
+        during registration and previously watched movies.
 
 Features:
-- Recommends the reader on the basis of the category of the books they like which is given to choose during registration.
+- Recommends the users on the basis of the category of the movies they like which is given to choose during registration.
 
-There is CRUD operations on user, profile and books.
+There is CRUD operations on user, profile and movies.
 User creation is done by Django default User. In other to change some field which is not on default side, you have to make custom User model. Since here is no any required fields other than default user, default user model is used.
 Profile and user have the relation of OneToOne Field.
-Recommended books is added on recommended books section based on the viewed books. And the user who has written the description of a specific book can only update and delete that book detail.
+Recommended movies is added on recommended movies section based on the viewed movies. And the user who has written the description of a specific movie can only update and delete that movie detail.
 You can change the password by clicking on forgot password button which is on Login Page.
 ## Installation
 - You should have python, Django installed on your system.
